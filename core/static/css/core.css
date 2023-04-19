@@ -1,0 +1,34 @@
+h1,h2,h3,h4,h5,h6,p,ul {
+  margin: 0;
+  padding: 0;
+}
+
+html,body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+
+body { background-color: #eee; }
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+header, footer { background-color: #263238; }
+header { width: 100%; }
+
+footer {
+  flex-shrink: 0;
+  height: auto;
+  text-align: center;
+}
+
+footer > .container { height: 100px; }
+main { flex: 1 0 auto; }
+.navbar .navbar-toggler { background-color: #fff; }
+main > .content { padding: 0 40px 50px 40px; }
+
+main > nav > .dropdown { margin-right: 20px }
+main > nav > .dropdown > button { font-size: 1rem; }
