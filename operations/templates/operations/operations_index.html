@@ -4,19 +4,41 @@
 
 {% block body_class %}body-operations-index{% endblock %}
 {% block main_class %}main-operations-index{% endblock %}
-{% block content_class %}content content-operations-index{% endblock %}
+{% block content_class %}content-operations-index content{% endblock %}
 
 {% block content %}
 
-<h1 class="my-4">{{ page.title }}</h1>
+{% if tag %}
+  <h3>Viewing all posts sorted by the tag {{ tag }}</h3>
+{% else %}
+  <h1 class="title">{{ page.title }}</h1>
+{% endif %}
 
-<div>{{ page.body }}</div>
+{% if page.publish_date %}
+  <p class="publish-date">{{ page.publish_date }}</p>
+{% endif %}
 
-{% for post in page.get_children %}
-  {% with post=post.specific %}
-    <h2><a href="{% pageurl post %}">{{ post.title }}</a></h2>
-    {{ post.body }}
-  {% endwith %}
-{% endfor %}
+{% if page.get_child_tags %}
+  <h4 class="mt-5">Tags</h4>
+  <a href="/operations/">All</a>
+  {% for tag in page.get_child_tags %}
+    <a href="{{ tag.url }}">{{ tag }}</a>
+  {% endfor %}
+{% endif %}
+
+{% if page.body %}
+  <div class="body">{{ page.body }}</div>
+{% endif %}
+
+{% if posts %}
+  <h4 class="mt-5">Posts</h4>
+  {% for post in posts %}
+    <a class="d-block" href="{% pageurl post %}">{{ post.title }}</a>
+  {% endfor %}
+{% endif %}
+
+{% if tag %}
+  <p class="my-3"><a href="/operations/">Back</a></p>
+{% endif %}
 
 {% endblock %}

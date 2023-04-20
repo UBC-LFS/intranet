@@ -2,15 +2,52 @@
 
 {% load wagtailcore_tags %}
 
-{% block body_class %}communication-page{% endblock %}
+{% block body_class %}body-communication-page{% endblock %}
+{% block main_class %}main-communication-page{% endblock %}
+{% block content_class %}content content-communication-page{% endblock %}
 
 {% block content %}
 
-<h1>{{ page.title }}</h1>
-<p class="meta">{{ page.date }}</p>
+<h1 class="title">{{ page.title }}</h1>
+<p class="publish-date">
+  {% if page.publish_date %}
+    {{ page.publish_date }}
+  {% endif %}
+</p>
+<div class="body">
+  {% if page.body %}
+    {{ page.body }}
+  {% endif %}
+</div>
 
-{{ page.body }}
+<div class="">
+  {{ page.get_tags }}
+</div>
 
-<p><a href="{{ page.get_parent.url }}">Return to Communications</a></p>
+
+{% if page.get_tags %}
+    <p class="blog__tag-introduction">Find more blog posts with similar tags</p>
+    <div>
+        <span class="u-sr-only">Filter blog posts by tag</span>
+        {% for tag in page.get_tags %}
+            <a href="{{ tag.url }}">{{ tag }}</a>
+        {% endfor %}
+    </div>
+{% endif %}
+
+
+{% with tags=page.tags.all %}
+  {% if tags %}
+    <div class="tags">
+      <h4 class="mb-3">Tags</h4>
+      {% for tag in tags %}
+        {{ slugurl }}
+        <a href="{% slugurl 'tags' %}?tag={{ tag }}">{{ tag }}</a>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
+
+<p class="my-3"><a href="{{ page.get_parent.url }}">Return to Communications</a></p>
 
 {% endblock %}

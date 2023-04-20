@@ -36,14 +36,18 @@
   <body class="{% block body_class %}{% endblock %}">
     {% wagtailuserbar %}
 
-    <header>
+    <header class="custom-bg-primary">
       <div class="container ps-0">
         <nav class="navbar navbar-expand-lg">
-
           <img class="me-3" src="{% static 'images/UBC-logo-2018-crest-white-rgb300.png' %}" alt="UBC logo" height="40" />
-          <span class="navbar-brand text-white">
-            LFS Intranet resources for faculty and staff
-          </span>
+          <a class="navbar-brand text-white me-5" href="/">LFS Intranet</a>
+
+          <div class="nav-items">
+            <a href="/human-resources/">Human Resources</a>
+            <a href="/finance/">Finance</a>
+            <a href="/operations/">Operations</a>
+            <a href="/communications/">Communications</a>
+          </div>
 
           {% if request.user.is_authenticated %}
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -54,13 +58,13 @@
               </ul>
               <div class="d-flex text-white">
                 <span class="text-white">Hi, {{ request.user.username }}</span>
-                <a class="btn-logout text-white ms-5" href="#">
+                <a class="btn-logout text-white ms-5" href="/admin/logout/">
                   Log out
                 </a>
               </div>
             </div>
           {% else %}
-            <a class="text-white ms-auto" href="/admin/">
+            <a class="text-white ms-auto" href="/admin/login/">
               Log in
             </a>
           {% endif %}
@@ -69,41 +73,17 @@
     </header>
 
     <main class="container bg-white px-0 {% block main_class %}{% endblock %}">
-      <nav>
-        <div class="dropdown d-inline-block">
-          <button class="btn btn-sm btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Human Resources</button>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="/human-resources/">Human Resources</a></li>
-          </ul>
-        </div>
-        <div class="dropdown d-inline-block">
-          <button class="btn btn-sm btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Finance</button>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="/finance/">Finance</a></li>
-          </ul>
-        </div>
-        <div class="dropdown d-inline-block">
-          <button class="btn btn-sm btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Operations</button>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="/operations/">Operations</a></li>
-          </ul>
-        </div>
-        <div class="dropdown d-inline-block">
-          <button class="btn btn-sm btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Communications</button>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="/communications/">Communications</a></li>
-          </ul>
-        </div>
-      </nav>
-
       <div class="{% block content_class %}{% endblock %}">
         {% block content %}{% endblock %}
       </div>
     </main>
 
-    <footer class="text-center text-white">
+    <footer class="custom-bg-primary text-center text-white">
       <div class="container">
-        Footer
+        <div class="footer-item">
+          <img class="me-3" src="{% static 'images/1_2016_UBCStandard_Signature_ReverseRGB72.png' %}" alt="UBC logo" height="40" />
+        </div>
+        <div class="footer-item">The Faculty of Land and Food System</div>
       </div>
     </footer>
 
