@@ -1,17 +1,13 @@
 {% extends "wagtailadmin/login.html" %}
 {% load static %}
 
-
 {% block branding_login %}
-<img class="login-logo-img" src="{% static 'images/UBC LFS Icons_Bird.png' %}" alt="UBC LFS Icons_Globe" style="width:50px; height:auto;" /><br />
-Sign into LFS Intranet
+<img class="login-logo-img" src="{% static 'images/ubc-logo.jpeg' %}" alt="UBC logo" style="width:50px; height:auto;" /><br />
+Sign in to LFS Intranet
 {% endblock %}
 
-
 {% block branding_logo %}
-
 <div class="" style="border:2px solid red; border-radius:4px; padding:10px; margin-top:30px;">
-  If you do not have permission to access the admin site, please contact administrator, <a href="mailto:web@landfood.ubc.ca">web@landfood.ubc.ca</a>.
+  If you do not have permission to access the admin site, please contact administrator, <a href="mailto:web@landfood.ubc.ca" style="color:blue; text-decoration:underline;">web@landfood.ubc.ca</a>.
 </div>
-
 {% endblock %}

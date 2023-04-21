@@ -1,16 +1,9 @@
 {% extends "base.html" %}
 
-{% load wagtailcore_tags %}
-
 {% block body_class %}operation-page{% endblock %}
+{% block main_class %}main-operation-page{% endblock %}
+{% block content_class %}content-operation-page page{% endblock %}
 
 {% block content %}
-
-<h1>{{ page.title }}</h1>
-<p class="meta">{{ page.publish_date }}</p>
-
-{{ page.body }}
-
-<p><a href="{{ page.get_parent.url }}">Return to Operations</a></p>
-
+  {% include 'subpages/app_page.html' with return_label='Operations' %}
 {% endblock %}

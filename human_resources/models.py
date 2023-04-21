@@ -112,5 +112,5 @@ class HumanResourcesIndex(RoutablePageMixin, Page):
             return redirect(self.url)
 
         posts = self.get_posts(tag=tag)
-        context = { "tag": tag, "posts": posts }
+        context = { "model": "Human Resources", "url": "/human-resources/", "tag": tag, "posts": posts }
         return render(request, "human_resources/human_resources_index.html", context)

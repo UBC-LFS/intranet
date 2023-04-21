@@ -111,5 +111,5 @@ class FinanceIndex(RoutablePageMixin, Page):
             return redirect(self.url)
 
         posts = self.get_posts(tag=tag)
-        context = { "tag": tag, "posts": posts }
+        context = { "model": "Finance", "url": "/finance/", "tag": tag, "posts": posts }
         return render(request, "finance/finance_index.html", context)

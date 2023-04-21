@@ -1,0 +1,34 @@
+{% load wagtailcore_tags %}
+
+<div class="two-columns">
+  <div class="column right-75">
+    <h1 class="page-title">{{ page.title }}</h1>
+
+    {% if page.body %}
+      <div class="body">{{ page.body }}</div>
+    {% endif %}
+  </div>
+  <div class="column left-25">
+    <div class="sidebar">
+      <a href="{{ page.get_parent.url }}">Return to {{ return_label }}</a>
+
+      {% if page.publish_date %}
+        <div class="publish-date mt-3">
+          <h6>Published Date:</h6>
+          {{ page.publish_date }}
+        </div>
+      {% endif %}
+
+      <div class="page-tags">
+        <h5 class="mt-4 mb-3">Tags</h5>
+        {% if page.get_tags %}
+          {% for tag in page.get_tags %}
+            <a class="tag" href="{{ tag.url }}">{{ tag }}</a>
+          {% endfor %}
+        {% else %}
+          No tags found
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>

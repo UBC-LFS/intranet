@@ -111,5 +111,5 @@ class CommunicationsIndex(RoutablePageMixin, Page):
             return redirect(self.url)
 
         posts = self.get_posts(tag=tag)
-        context = { "tag": tag, "posts": posts }
+        context = { "model": "Communications", "url": "/communications/", "tag": tag, "posts": posts }
         return render(request, "communications/communications_index.html", context)

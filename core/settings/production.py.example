@@ -2,6 +2,16 @@ from .base import *
 
 DEBUG = False
 
+SECRET_KEY = os.environ['INTRANET_SECRET_KEY']
+
+ALLOWED_HOSTS = ["*"]
+
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+
+CSRF_TRUSTED_ORIGINS = ['http://localhost:8000']
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+
 try:
     from .local import *
 except ImportError:
