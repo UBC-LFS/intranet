@@ -63,8 +63,8 @@ class CustomLDAPBackend(BaseBackend):
                 user = User.objects.get(username=username)
             except User.DoesNotExist:
                 user = User(username=username)
-                user.first_name = first_name,
-                user.last_name = last_name,
+                user.first_name = first_name
+                user.last_name = last_name
                 user.email = email
                 user.set_unusable_password()
                 user.save()
