@@ -27,10 +27,11 @@ INTERNAL_IPS = [
 # Application definition
 
 INSTALLED_APPS = [
-    "human_resources",
-    "finance",
-    "operations",
     "communications",
+    "finance",
+    "human_resources",
+    "learning_centre",
+    "operations",
     "home",
     "search",
     "wagtail.contrib.forms",

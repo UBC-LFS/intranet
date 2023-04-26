@@ -38,43 +38,57 @@
   <body class="{% block body_class %}{% endblock %}">
     {% wagtailuserbar %}
 
-    <header class="custom-bg-primary">
-      <div class="container ps-0">
-        <nav class="navbar navbar-expand-lg">
+    <header>
+      <nav class="navbar navbar-dark navbar-expand-xl custom-bg-primary">
+        <div class="container">
           <img class="me-3" src="{% static 'images/UBC-logo-2018-crest-white-rgb300.png' %}" alt="UBC logo" height="40" />
           <a class="navbar-brand text-white me-5" href="/">LFS Intranet</a>
 
-          <div class="nav-items">
-            <a href="/human-resources/">Human Resources</a>
-            <a href="/finance/">Finance</a>
-            <a href="/operations/">Operations</a>
-            <a href="/communications/">Communications</a>
-          </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
 
-          {% if request.user.is_authenticated %}
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              </ul>
-              <div class="d-flex text-white">
-                <span class="text-white">Hi, {{ request.user.username }}</span>
-                <a class="btn-logout text-white ms-5" href="/admin/logout/">
-                  Log out
-                </a>
-              </div>
-            </div>
-          {% else %}
-            <a class="text-white ms-auto" href="/admin/login/">
-              Log in
-            </a>
-          {% endif %}
-        </nav>
-      </div>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active" href="/communications/">Communications</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" href="/finance/">Finance</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" href="/human-resources/">Human Resources</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" href="/learning-centre/">Learning Centre</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" href="/operations/">Operations</a>
+              </li>
+            </ul>
+            <form class="d-flex" action="/search/" method="GET" role="search">
+              <input class="form-control form-control-sm me-2" name="query" type="search" placeholder="Search" aria-label="Search">
+              <button class="btn btn-sm btn-outline-light" type="submit">Search</button>
+            </form>
+          </div>
+        </div>
+      </nav>
     </header>
 
-    <main class="container bg-white px-0 {% block main_class %}{% endblock %}">
+    <div class="sub-nav">
+      <div class="container">
+        <div class="item">
+          {% if request.user.is_authenticated %}
+            <span>Hi, {{ request.user.username }}</span>
+            <a class="btn-logout ext-white ms-5" href="/admin/logout/">Log out</a>
+          {% else %}
+            <a href="/admin/login/">Log in</a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <main class="container bg-white {% block main_class %}{% endblock %}">
       <div class="{% block content_class %}{% endblock %}">
         {% block content %}{% endblock %}
       </div>
@@ -85,7 +99,9 @@
         <div class="footer-item">
           <img class="me-3" src="{% static 'images/1_2016_UBCStandard_Signature_ReverseRGB72.png' %}" alt="UBC logo" height="40" />
         </div>
-        <div class="footer-item">The Faculty of Land and Food System</div>
+        <div class="footer-item">
+          The Faculty of Land and Food Systems
+        </div>
       </div>
     </footer>
 
