@@ -28,7 +28,7 @@ header .navbar .nav-item .nav-link:hover { text-decoration: underline; }
 
 .sub-nav {
   width: 100%;
-  background-color: #ddd;
+  background-color: #eee;
   margin-bottom: 30px;
   padding: 5px 0;
 }
