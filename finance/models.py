@@ -45,6 +45,7 @@ class FinancePage(Page):
     ]
 
     parent_page_types = ['FinanceIndex']
+    subpage_types = []
 
     @property
     def get_tags(self):

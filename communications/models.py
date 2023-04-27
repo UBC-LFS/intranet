@@ -24,6 +24,7 @@ class CommunicationTag(TaggedItemBase):
         on_delete=models.CASCADE
     )
 
+
 class CommunicationPage(Page):
     publish_date = models.DateField('Publish date', blank=True, null=True)
     body = StreamField([
@@ -44,6 +45,7 @@ class CommunicationPage(Page):
     ]
 
     parent_page_types = ['CommunicationsIndex']
+    subpage_types = []
 
     @property
     def get_tags(self):

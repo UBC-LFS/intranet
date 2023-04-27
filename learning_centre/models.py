@@ -24,6 +24,7 @@ class LearningCentreTag(TaggedItemBase):
         on_delete=models.CASCADE
     )
 
+
 class LearningCentrePage(Page):
     publish_date = models.DateField('Publish date', blank=True, null=True)
     body = StreamField([
@@ -44,6 +45,7 @@ class LearningCentrePage(Page):
     ]
 
     parent_page_types = ['LearningCentreIndex']
+    subpage_types = []
 
     @property
     def get_tags(self):
@@ -52,7 +54,6 @@ class LearningCentrePage(Page):
         for tag in tags:
             tag.url = f"{base_url}tags/{tag.slug}/"
         return tags
-
 
 
 class LearningCentreIndex(RoutablePageMixin, Page):

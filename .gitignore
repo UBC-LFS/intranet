@@ -3,3 +3,5 @@ core/settings/base.py
 core/settings/dev.py
 core/settings/production.py
 /static
+manage.py
+core/wsgi.py

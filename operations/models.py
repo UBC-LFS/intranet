@@ -45,6 +45,7 @@ class OperationPage(Page):
     ]
 
     parent_page_types = ['OperationsIndex']
+    subpage_types = []
 
     @property
     def get_tags(self):
