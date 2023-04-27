@@ -2,3 +2,4 @@ __pycache__
 core/settings/base.py
 core/settings/dev.py
 core/settings/production.py
+/static

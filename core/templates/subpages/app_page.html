@@ -12,8 +12,8 @@
   <div class="column left-25">
     <div class="sidebar">
       {% if page.publish_date %}
-        <div class="publish-date mt-3">
-          <h6>Published Date:</h6>
+        <div class="publish-date mb-3">
+          <h5>Published Date</h5>
           {{ page.publish_date }}
         </div>
       {% endif %}
@@ -22,7 +22,7 @@
         <h5>Category</h5>
         <h5><span class="badge bg-success mt-2">{{ return_label }}</span></h5>
 
-        <h5 class="mt-4 mb-3">Tags</h5>
+        <h5 class="mt-4 mb-2">Tags</h5>
         {% if page.get_tags %}
           {% for tag in page.get_tags %}
             <a class="tag" href="{{ tag.url }}">{{ tag }}</a>
