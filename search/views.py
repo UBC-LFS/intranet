@@ -23,8 +23,10 @@ def find_page(page, query, results):
         body = html_replace(page.financepage.body)
     elif page.specific.content_type.model == 'humanresourcepage':
         body = html_replace(page.humanresourcepage.body)
+    elif page.specific.content_type.model == 'learningcentrepage':
+        body = html_replace(page.learningcentrepage.body)
     elif page.specific.content_type.model == 'operationpage':
-        body = html_replace(page.operationpage.body)            
+        body = html_replace(page.operationpage.body)
 
     if body.find(query) > -1:
         results.append(page)
@@ -51,6 +53,8 @@ def search(request):
     else:
         search_results = Page.objects.none()
 
+    total_results = len(search_results)
+
     # Pagination
     paginator = Paginator(search_results, 20)
     try:
@@ -63,5 +67,6 @@ def search(request):
     return TemplateResponse(request, 'search/search.html', {
             'search_query': search_query,
             'search_results': search_results,
+            'total_results': total_results
         },
     )
