@@ -146,34 +146,6 @@ main .sidebar {
   }
 }
 
-
-
-main .index .item {
-  border: 1px solid #eee;
-  border-radius: 4px;
-  height: 120px;
-  margin-bottom: 40px;
-}
-main .index .item a { text-decoration: none; }
-main .index .item .item-title {
-  height: 80px;
-  background-color: #0055B7;
-  color: #fff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  border-top-right-radius: 4px;
-  border-top-left-radius: 4px;
-}
-main .index .item .item-title a { color: #fff; }
-
-main .index .item .tag { color: #c55302; }
-
-main .index .item a:hover {
-  text-decoration: underline;
-}
-
 main .page-tags .tag {
   text-decoration: none;
   border: 1px solid #c55302;
@@ -199,8 +171,6 @@ main .custom-form {
 
 /* Color */
 .custom-bg-primary { background-color: #002145; }
-
-/*  */
 
 
 /* `sm` applies to x-small devices (portrait phones, less than 576px) */
