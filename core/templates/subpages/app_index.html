@@ -1,56 +1,59 @@
 {% load static %}
 {% load wagtailcore_tags %}
 
-<div class="two-columns">
-  <div class="column right-75">
+<div class="item item-{{ page.slug }}">
+  <div class="two-columns">
+    <div class="column right-75">
 
-    {% if tag %}
-      <h3>Viewing all posts sorted by the tag <span class="fw-bold text-danger">{{ tag }}</span></h3>
-      <a class="d-block mt-2" href="{{ url }}">Back to {{ model }}</a>
-    {% else %}
-      <h2 class="page-title">{{ page.title }}</h2>
-    {% endif %}
-
-    {% if page.body %}
-      <div class="body">{{ page.body }}</div>
-    {% endif %}
-
-    <ul class="mt-5">
-      {% for post in posts %}
-        <li class="mb-3">
-          <a class="fs-5" href="{% pageurl post %}">{{ post.title }}</a>
-
-          {% if post.get_tags %}
-            <small class="d-block">Tags:
-              {% for tag in post.get_tags %}
-                <a class="item-tag" href="{{ tag.url }}">{{ tag }}</a>{% if not forloop.last %},{% endif %}
-              {% endfor %}
-            </small>
-          {% endif %}
-        </li>
-      {% empty %}
-        No posts found
-      {% endfor %}
-    </ul>
-  </div>
-  <div class="column left-25">
-    <div class="sidebar">
-      {% if not tag %}
-        {% if page.publish_date %}
-          <p class="publish-date mb-4">{{ page.publish_date }}</p>
-        {% endif %}
-
-        <div class="page-tags">
-          <h5 class="mb-3">All Tags</h5>
-          {% if page.get_child_tags %}
-            {% for tag in page.get_child_tags %}
-              <a class="tag" href="{{ tag.url }}">{{ tag }}</a>
-            {% endfor %}
-          {% else %}
-            No tags found
-          {% endif %}
-        </div>
+      {% if tag %}
+        <h3>Viewing all posts sorted by the tag <span class="fw-bold text-danger">{{ tag }}</span></h3>
+        <a class="d-block mt-2" href="{{ url }}">Back to {{ model }}</a>
+      {% else %}
+        <h2 class="page-title">{{ page.title }}</h2>
       {% endif %}
+
+      {% if page.body %}
+        <div class="body">{{ page.body }}</div>
+      {% endif %}
+
+      <ul class="mt-5">
+        {% for post in posts %}
+          <li class="mb-3">
+            <a class="fs-5" href="{% pageurl post %}">{{ post.title }}</a>
+
+            {% if post.get_tags %}
+              <small class="d-block">Tags:
+                {% for tag in post.get_tags %}
+                  <a class="item-tag" href="{{ tag.url }}">{{ tag }}</a>{% if not forloop.last %},{% endif %}
+                {% endfor %}
+              </small>
+            {% endif %}
+          </li>
+        {% empty %}
+          No posts found
+        {% endfor %}
+      </ul>
+    </div>
+    <div class="column left-25">
+      <div class="sidebar">
+        {% if not tag %}
+          {% if page.publish_date %}
+            <p class="publish-date mb-4">{{ page.publish_date }}</p>
+          {% endif %}
+
+          <div class="page-tags">
+            <h5 class="mb-3">All Tags</h5>
+            {% if page.get_child_tags %}
+              {% for tag in page.get_child_tags %}
+                <a class="tag" href="{{ tag.url }}">{{ tag }}</a>
+              {% endfor %}
+            {% else %}
+              No tags found
+            {% endif %}
+          </div>
+        {% endif %}
+      </div>
     </div>
   </div>
+
 </div>

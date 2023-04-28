@@ -1,35 +1,37 @@
 {% load wagtailcore_tags %}
 
-<div class="two-columns">
-  <div class="column right-75">
-    <h2 class="page-title">{{ page.title }}</h2>
-    <p class="mt-2"><a href="{{ page.get_parent.url }}">Return to {{ return_label }}</a></p>
+<div class="item item-{{ page.slug }}">
+  <div class="two-columns">
+    <div class="column right-75">
+      <h2 class="page-title">{{ page.title }}</h2>
+      <p class="mt-2"><a href="{{ page.get_parent.url }}">Return to {{ return_label }}</a></p>
 
-    {% if page.body %}
-      <div class="body">{{ page.body }}</div>
-    {% endif %}
-  </div>
-  <div class="column left-25">
-    <div class="sidebar">
-      {% if page.publish_date %}
-        <div class="publish-date mb-3">
-          <h5>Published Date</h5>
-          {{ page.publish_date }}
-        </div>
+      {% if page.body %}
+        <div class="body">{{ page.body }}</div>
       {% endif %}
-
-      <div class="page-tags">
-        <h5>Category</h5>
-        <h5><span class="badge bg-success mt-2">{{ return_label }}</span></h5>
-
-        <h5 class="mt-4 mb-2">Tags</h5>
-        {% if page.get_tags %}
-          {% for tag in page.get_tags %}
-            <a class="tag" href="{{ tag.url }}">{{ tag }}</a>
-          {% endfor %}
-        {% else %}
-          No tags found
+    </div>
+    <div class="column left-25">
+      <div class="sidebar">
+        {% if page.publish_date %}
+          <div class="publish-date mb-3">
+            <h5>Published Date</h5>
+            {{ page.publish_date }}
+          </div>
         {% endif %}
+
+        <div class="page-tags">
+          <h5>Category</h5>
+          <h5><span class="badge bg-success mt-2">{{ return_label }}</span></h5>
+
+          <h5 class="mt-4 mb-2">Tags</h5>
+          {% if page.get_tags %}
+            {% for tag in page.get_tags %}
+              <a class="tag" href="{{ tag.url }}">{{ tag }}</a>
+            {% endfor %}
+          {% else %}
+            No tags found
+          {% endif %}
+        </div>
       </div>
     </div>
   </div>
