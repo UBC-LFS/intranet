@@ -28,31 +28,21 @@
 
   <ul class="mt-4">
     {% for result in search_results %}
-      <li class="mb-2">
+      <li class="mb-3">
         <a class="fs-5" href="{% pageurl result %}">{{ result }}</a>
-        <span class="badge text-bg-light">
-          {% if result.specific.content_type.model == 'communicationpage' %}
-            Communications
-          {% elif result.specific.content_type.model == 'financepage' %}
-            Finance
-          {% elif result.specific.content_type.model == 'humanresourcepage' %}
-            Human Resources
-          {% elif result.specific.content_type.model == 'learningcentrepage' %}
-            Learning Centre
-          {% elif result.specific.content_type.model == 'operationpage' %}
-            Operations
-          {% endif %}
-        </span>
+        <span class="badge text-bg-light">{{ result.badge }}</span>
 
         {% if result.specific.search_description %}
           <p class="text-secondary">{{ result.specific.search_description|richtext }}</p>
         {% endif %}
 
-        {% if result.specific.communicationpage.get_tags %}
-          Tags:
-          {% for tag in result.specific.communicationpage.get_tags %}
-            <a href="{{ tag.url }}">{{ tag }}</a>{% if not forloop.last %}, {% endif %}
-          {% endfor %}
+        {% if result.tags %}
+          <p>
+            Tags:
+            {% for tag in result.tags %}
+              <a href="{{ tag.url }}">{{ tag.name }}</a>{% if not forloop.last %}, {% endif %}
+            {% endfor %}
+          </p>
         {% endif %}
       </li>
     {% endfor %}
@@ -110,9 +100,6 @@
       </ul>
     </nav>
   {% endif %}
-
-
-
 
 {% elif search_query %}
   <p class="mt-3">No results found for <span class="text-danger fw-bold">{{ search_query }}</span></p>

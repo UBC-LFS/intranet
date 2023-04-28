@@ -33,6 +33,9 @@ def find_page(page, query, results):
     return results
 
 
+def get_tags(tags):
+    return [ { 'url': tag.url, 'name': tag.name } for tag in tags ]
+
 def search(request):
     search_query = request.GET.get('query', '').strip().lower()
     page = request.GET.get('page', 1)
@@ -43,7 +46,6 @@ def search(request):
         pages = Page.objects.live()
         for p in pages:
             if p.depth == 4:
-                print(p.specific, p.specific.content_type.model)
                 search_results = find_page(p, search_query, search_results)
                 
         query = Query.get(search_query)
@@ -63,6 +65,33 @@ def search(request):
         search_results = paginator.page(1)
     except EmptyPage:
         search_results = paginator.page(paginator.num_pages)
+    
+    for item in search_results:
+        badge = None
+        tags = []
+        
+        if item.specific.content_type.model == 'communicationpage':
+            badge = 'Communications'
+            tags = get_tags(item.specific.communicationpage.get_tags)
+        
+        elif item.specific.content_type.model == 'financepage':
+            badge = 'Finance'
+            tags = get_tags(item.specific.financepage.get_tags)
+        
+        elif item.specific.content_type.model == 'humanresourcepage':
+            badge = 'Human Resources'
+            tags = get_tags(item.specific.humanresourcepage.get_tags)
+        
+        elif item.specific.content_type.model == 'learningcentrepage':
+            badge = 'Learning Centre'
+            tags = get_tags(item.specific.learningcentrepage.get_tags)
+        
+        elif item.specific.content_type.model == 'operationpage':
+            badge = 'Operations'
+            tags = get_tags(item.specific.operationpage.get_tags)
+
+        item.badge = badge
+        item.tags = tags
 
     return TemplateResponse(request, 'search/search.html', {
             'search_query': search_query,

@@ -17,7 +17,7 @@
 
     <ul class="mt-5">
       {% for post in posts %}
-        <li class="mb-2">
+        <li class="mb-3">
           <a class="fs-5" href="{% pageurl post %}">{{ post.title }}</a>
 
           {% if post.get_tags %}
