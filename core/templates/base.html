@@ -60,7 +60,7 @@
                   Hi, {{ request.user.username }} ({% if request.user.is_superuser %}Admin{% endif %}{% for group in request.user.groups.all %}, {{ group.name }}{% endfor %})
                   <a class="btn-logout text-white ms-5" href="/admin/logout/">Log out</a>
                 {% else %}
-                  <a href="/admin/login/">Log in</a>
+                  <a class="text-white" href="/admin/login/">Log in</a>
                 {% endif %}
               </div>
             </ul>
