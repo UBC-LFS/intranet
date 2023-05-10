@@ -17,22 +17,22 @@ from wagtail.contrib.routable_page.models import RoutablePageMixin, route
 from django.shortcuts import redirect, render
 
 
-class LearningCentreTag(TaggedItemBase):
+class AboutTag(TaggedItemBase):
     content_object = ParentalKey(
-        'LearningCentrePage',
+        'AboutPage',
         related_name='tagged_items',
         on_delete=models.CASCADE
     )
 
 
-class LearningCentrePage(Page):
+class AboutPage(Page):
     publish_date = models.DateField('Publish date', blank=True, null=True)
     body = StreamField([
         ('visual', blocks.RichTextBlock(features=settings.RICH_TEXT_FEATURES)),
         ('html', blocks.RawHTMLBlock()),
         ('image', ImageChooserBlock())
     ], use_json_field=True, blank=True)
-    tags = ClusterTaggableManager(through=LearningCentreTag, blank=True)
+    tags = ClusterTaggableManager(through=AboutTag, blank=True)
 
     search_fields = Page.search_fields + [
         index.SearchField('body')
@@ -41,10 +41,10 @@ class LearningCentrePage(Page):
     content_panels = Page.content_panels + [
         FieldPanel('publish_date'),
         FieldPanel('body'),
-        FieldPanel("tags")
+        FieldPanel('tags')
     ]
 
-    parent_page_types = ['LearningCentreIndex']
+    parent_page_types = ['AboutIndex']
     subpage_types = []
 
     @property
@@ -56,7 +56,7 @@ class LearningCentrePage(Page):
         return tags
 
 
-class LearningCentreIndex(RoutablePageMixin, Page):
+class AboutIndex(RoutablePageMixin, Page):
     publish_date = models.DateField('Publish date', blank=True, null=True)
     body = StreamField([
         ('visual', blocks.RichTextBlock(features=settings.RICH_TEXT_FEATURES)),
@@ -73,20 +73,20 @@ class LearningCentreIndex(RoutablePageMixin, Page):
         FieldPanel('body'),
     ]
 
-    subpage_types = ['LearningCentrePage']
+    subpage_types = ['AboutPage']
 
     def children(self):
         return self.get_children().specific().live()
 
     def get_context(self, request):
-        context = super(LearningCentreIndex, self).get_context(request)
+        context = super(AboutIndex, self).get_context(request)
         context["posts"] = (
-            LearningCentrePage.objects.descendant_of(self).live().order_by("-publish_date")
+            AboutPage.objects.descendant_of(self).live().order_by("-publish_date")
         )
         return context
 
     def get_posts(self, tag=None):
-        posts = LearningCentrePage.objects.live().descendant_of(self)
+        posts = AboutPage.objects.live().descendant_of(self)
         if tag:
             posts = posts.filter(tags=tag)
         return posts
@@ -113,5 +113,5 @@ class LearningCentreIndex(RoutablePageMixin, Page):
             return redirect(self.url)
 
         posts = self.get_posts(tag=tag)
-        context = { "model": "Learning Centre", "url": "/learning-centre/", "tag": tag, "posts": posts }
-        return render(request, "learning_centre/learning_centre_index.html", context)
+        context = { "model": "About", "url": "/about/", "tag": tag, "posts": posts }
+        return render(request, "about/about_index.html", context)

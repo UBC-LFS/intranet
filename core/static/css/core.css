@@ -19,20 +19,68 @@ body {
 
 header { width: 100%; }
 header .navbar .navbar-toggler { border: 1px solid #fff; }
-
+header .navbar .navbar-brand { margin-right: 150px; }
 header .navbar .nav-item .nav-link {
   color: #fff;
   text-decoration: none;
   margin-left: 20px;
 }
 header .navbar .nav-item .nav-link:hover { text-decoration: underline; }
+header .navbar .navbar-nav {
+  width: 100%;
+  align-items: center;
+}
+header .navbar .navbar-nav form { width: 40%; }
+header .navbar .navbar-nav .log-in-out { margin-left: auto; }
+
+@media (max-width: 575.98px) {
+  header .navbar .navbar-brand { margin-right: 0; }
+  header .navbar .navbar-nav form {
+    width: 100%;
+    margin: 10px 0;
+  }
+  header .navbar .navbar-nav .log-in-out { margin-left: inherit; }
+}
+
+@media (max-width: 767.98px) {
+  header .navbar .navbar-brand { margin-right: 0; }
+  header .navbar .navbar-nav form {
+    width: 100%;
+    margin: 10px 0;
+  }
+  header .navbar .navbar-nav .log-in-out { margin-left: inherit; }
+}
+
+@media (max-width: 991.98px) {
+  header .navbar .navbar-brand { margin-right: 0; }
+  header .navbar .navbar-nav form {
+    width: 100%;
+    margin: 10px 0;
+  }
+  header .navbar .navbar-nav .log-in-out { margin-left: inherit; }
+}
+
+@media (max-width: 1199.98px) {
+  header .navbar .navbar-brand { margin-right: 70px; }
+}
+
 
 .sub-nav {
   width: 100%;
   background-color: #ddd;
   margin-bottom: 30px;
-  padding: 5px 0;
+  padding: 10px 0;
 }
+
+.sub-nav a {
+  color: #212529;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.sub-nav a:not(:last-child) { margin-right: 30px; }
+
+.sub-nav a:hover { text-decoration: underline; }
 
 .sub-nav .item { float: right; }
 .sub-nav .item > a {
