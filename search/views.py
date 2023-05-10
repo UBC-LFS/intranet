@@ -17,16 +17,22 @@ def find_page(page, query, results):
         return results
 
     body = None
-    if page.specific.content_type.model == 'communicationpage':
+    if page.specific.content_type.model == 'aboutpage':
+        body = html_replace(page.aboutpage.body)
+    elif page.specific.content_type.model == 'communicationpage':
         body = html_replace(page.communicationpage.body)
+    elif page.specific.content_type.model == 'facultyresourcepage':
+        body = html_replace(page.facultyresourcepage.body)
     elif page.specific.content_type.model == 'financepage':
         body = html_replace(page.financepage.body)
     elif page.specific.content_type.model == 'humanresourcepage':
         body = html_replace(page.humanresourcepage.body)
-    elif page.specific.content_type.model == 'learningcentrepage':
-        body = html_replace(page.learningcentrepage.body)
+    elif page.specific.content_type.model == 'newtolfspage':
+        body = html_replace(page.newtolfspage.body)
     elif page.specific.content_type.model == 'operationpage':
         body = html_replace(page.operationpage.body)
+    elif page.specific.content_type.model == 'policypage':
+        body = html_replace(page.policypage.body)
 
     if body.find(query) > -1:
         results.append(page)
@@ -47,7 +53,7 @@ def search(request):
         for p in pages:
             if p.depth == 4:
                 search_results = find_page(p, search_query, search_results)
-                
+
         query = Query.get(search_query)
 
         # Record hit
@@ -65,30 +71,35 @@ def search(request):
         search_results = paginator.page(1)
     except EmptyPage:
         search_results = paginator.page(paginator.num_pages)
-    
+
     for item in search_results:
         badge = None
         tags = []
-        
-        if item.specific.content_type.model == 'communicationpage':
+
+        if item.specific.content_type.model == 'aboutpage':
+            badge = 'About'
+            tags = get_tags(item.specific.aboutpage.get_tags)
+        elif item.specific.content_type.model == 'communicationpage':
             badge = 'Communications'
             tags = get_tags(item.specific.communicationpage.get_tags)
-        
+        elif item.specific.content_type.model == 'facultyresourcepage':
+            badge = 'Faculty Resources'
+            tags = get_tags(item.specific.financepage.get_tags)
         elif item.specific.content_type.model == 'financepage':
             badge = 'Finance'
             tags = get_tags(item.specific.financepage.get_tags)
-        
         elif item.specific.content_type.model == 'humanresourcepage':
             badge = 'Human Resources'
             tags = get_tags(item.specific.humanresourcepage.get_tags)
-        
-        elif item.specific.content_type.model == 'learningcentrepage':
-            badge = 'Learning Centre'
-            tags = get_tags(item.specific.learningcentrepage.get_tags)
-        
+        elif item.specific.content_type.model == 'newtolfspage':
+            badge = 'New to LFS'
+            tags = get_tags(item.specific.newtolfspage.get_tags)
         elif item.specific.content_type.model == 'operationpage':
             badge = 'Operations'
             tags = get_tags(item.specific.operationpage.get_tags)
+        elif item.specific.content_type.model == 'policypage':
+            badge = 'Policies'
+            tags = get_tags(item.specific.policypage.get_tags)
 
         item.badge = badge
         item.tags = tags
