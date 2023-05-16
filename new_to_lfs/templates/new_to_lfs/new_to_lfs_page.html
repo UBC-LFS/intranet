@@ -2,10 +2,10 @@
 
 {% load wagtailcore_tags %}
 
-{% block body_class %}body-new-to-lfs-page{% endblock %}
-{% block main_class %}main-new-to-lfs-page{% endblock %}
-{% block content_class %}content-new-to-lfs-page page{% endblock %}
+{% block body_class %}body-{{ model_name }}{% endblock %}
+{% block main_class %}main-{{ model_name }}{% endblock %}
+{% block content_class %}content-{{ model_name }} page{% endblock %}
 
 {% block content %}
-  {% include 'subpages/app_page.html' with return_label='New to LFS' %}
+  {% include 'subpages/app_page.html' with return_label=app_name %}
 {% endblock %}

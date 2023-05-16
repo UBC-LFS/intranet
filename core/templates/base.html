@@ -52,13 +52,13 @@
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav">
               <form class="serach d-flex" action="/search/" method="GET" role="search">
-                <input class="form-control form-control-sm me-2" name="query" type="search" placeholder="Search" aria-label="Search">
+                <input class="form-control form-control-sm me-2" name="query" type="search" aria-label="Search" placeholder="Enter" />
                 <button class="btn btn-sm btn-outline-light" type="submit">Search</button>
               </form>
               <div class="log-in-out text-white">
                 {% if request.user.is_authenticated %}
-                  Hi, {{ request.user.username }} ({% if request.user.is_superuser %}Admin{% endif %}{% for group in request.user.groups.all %}, {{ group.name }}{% endfor %})
-                  <a class="btn-logout text-white ms-5" href="/admin/logout/">Log out</a>
+                  Hi, {{ request.user.username }} ({% if request.user.is_superuser %}Admin{% if request.user.groups.count > 0 %}, {% endif %}{% endif %}{% for group in request.user.groups.all %}{{ group.name }}{% if not forloop.last %}, {% endif %}{% endfor %})
+                  <a class="btn-logout text-white ms-4" href="/admin/logout/">Log out</a>
                 {% else %}
                   <a class="text-white" href="/admin/login/">Log in</a>
                 {% endif %}

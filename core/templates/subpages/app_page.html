@@ -15,13 +15,13 @@
         {% if page.publish_date %}
           <div class="publish-date mb-3">
             <h5>Published Date</h5>
-            {{ page.publish_date }}
+            <span class="text-secondary">{{ page.publish_date }}</span>
           </div>
         {% endif %}
 
         <div class="page-tags">
           <h5>Category</h5>
-          <h5><span class="badge bg-success mt-2">{{ return_label }}</span></h5>
+          <h6><span class="badge bg-success mt-2">{{ return_label }}</span></h6>
 
           <h5 class="mt-4 mb-2">Tags</h5>
           {% if page.get_tags %}

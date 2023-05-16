@@ -3,8 +3,7 @@ from django.template.response import TemplateResponse
 
 from wagtail.models import Page
 from wagtail.search.models import Query
-from human_resources import models
-from communications import models
+
 import re
 
 def html_replace(text):

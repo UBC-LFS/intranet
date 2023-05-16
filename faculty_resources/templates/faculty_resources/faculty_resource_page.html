@@ -2,10 +2,10 @@
 
 {% load wagtailcore_tags %}
 
-{% block body_class %}body-faculty-resource-page{% endblock %}
-{% block main_class %}main-faculty-resource-page{% endblock %}
-{% block content_class %}content-faculty-resource-page page{% endblock %}
+{% block body_class %}body-{{ model_name }}{% endblock %}
+{% block main_class %}main-{{ model_name }}{% endblock %}
+{% block content_class %}content-{{ model_name }} page{% endblock %}
 
 {% block content %}
-  {% include 'subpages/app_page.html' with return_label='Faculty Resources' %}
+  {% include 'subpages/app_page.html' with return_label=app_name %}
 {% endblock %}

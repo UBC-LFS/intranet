@@ -7,7 +7,7 @@
 
       {% if tag %}
         <h3>Viewing all posts sorted by the tag <span class="fw-bold text-danger">{{ tag }}</span></h3>
-        <a class="d-block mt-2" href="{{ url }}">Back to {{ model }}</a>
+        <a class="d-block mt-2" href="{{ url }}">Back to {{ app_name }}</a>
       {% else %}
         <h2 class="page-title">{{ page.title }}</h2>
       {% endif %}
@@ -19,14 +19,31 @@
       <ul class="mt-5">
         {% for post in posts %}
           <li class="mb-3">
-            <a class="fs-5" href="{% pageurl post %}">{{ post.title }}</a>
-
+            <a class="fs-5 d-block" href="{% pageurl post %}">{{ post.title }}</a>
             {% if post.get_tags %}
               <small class="d-block">Tags:
                 {% for tag in post.get_tags %}
                   <a class="item-tag" href="{{ tag.url }}">{{ tag }}</a>{% if not forloop.last %},{% endif %}
                 {% endfor %}
               </small>
+            {% endif %}
+            {% if request.user.is_authenticated and request.user.is_superuser %}
+              <div class="badge text-bg-light">
+                {% if 'public' in post.restriction_types %}
+                  Public
+                {% elif 'login' in post.restriction_types %}
+                  Private, accessible to logged-in users
+                {% elif 'password' in post.restriction_types %}
+                  Private, accessible with the following password
+                {% elif 'groups' in post.restriction_types %}
+                  Private, accessible to users in specific groups
+                {% endif %}
+              </div>
+              {% if 'groups' in post.restriction_types %}
+                {% for group in post.restriction_groups %}
+                  <span class="badge text-bg-success">{{ group }}</span>
+                {% endfor %}
+              {% endif %}
             {% endif %}
           </li>
         {% empty %}
@@ -38,7 +55,10 @@
       <div class="sidebar">
         {% if not tag %}
           {% if page.publish_date %}
-            <p class="publish-date mb-4">{{ page.publish_date }}</p>
+            <div class="publish-date mb-3">
+              <h5>Published Date</h5>
+              <span class="text-secondary">{{ page.publish_date }}</span>
+            </div>
           {% endif %}
 
           <div class="page-tags">
