@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block body_class %}body-{{ model_name }}{% endblock %}
+{% block main_class %}main-{{ model_name }}{% endblock %}
+{% block content_class %}content-{{ model_name }} index{% endblock %}
+
+{% block content %}
+  {% include 'subpages/app_index.html'%}
+{% endblock %}
