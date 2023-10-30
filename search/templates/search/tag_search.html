@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load wagtailcore_tags %}
+
+{% block title %}{{ page.title }}{% endblock %}
+
+{% block navbar %}
+  {% include 'subpages/navbar.html' with items=page.get_parent.get_children %}
+{% endblock %}
+
+{% block body_class %}body-{{ model_name }}{% endblock %}
+{% block main_class %}main-{{ model_name }}{% endblock %}
+{% block content_class %}content-{{ model_name }} index{% endblock %}
+
+
+{% block content %}
+
+<h2>Tag Search</h2>
+<h5>Viewing all posts sorted by the tag <span class="fw-bold text-danger">{{ tag }}</span></h5>
+<a class="d-block mt-2" href="/">Go to Home</a>
+
+{% if posts %}
+  <ul class="mt-5">
+    {% for post in posts %}
+      <li class="mb-3">
+        <a class="fs-5 d-block" href="{% pageurl post %}">{{ post.title }}</a>
+        {% if post.get_tags %}
+          <small class="d-block">Tags:
+            {% for tag in post.get_tags %}
+              <a class="item-tag" href="{{ tag.url }}">{{ tag }}</a>{% if not forloop.last %},{% endif %}
+            {% endfor %}
+          </small>
+        {% endif %}
+      </li>
+    {% empty %}
+      No posts found
+    {% endfor %}
+  </ul>
+{% endif %}
+
+
+{% endblock %}

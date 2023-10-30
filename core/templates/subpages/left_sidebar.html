@@ -1,0 +1,30 @@
+{% load wagtailcore_tags %}
+
+<section class="left-sidebar">
+  <a class="btn btn-success mb-5" href="/{{ slug }}/">
+    <span class="material-symbols-outlined">home</span>
+    {{ title }} Home
+  </a>
+
+  {% if sidebar_menu %}
+    <h4>Menu</h4>
+    <ul class="sidebar-menu ps-0" style="list-style-type: none;">
+      {% for page in sidebar_menu %}
+        <li class="menu-page fs-5">
+          <a href="{% pageurl page %}">{{ page.title }}</a>
+          {% include 'subpages/_restriction_info.html' with item=page %}
+        </li>
+        {% if page.children|length > 0 %}
+          <ul class="menu-post">
+            {% for post in page.children %}
+              <li>
+                <a href="{% pageurl post %}">{{ post.title }}</a>
+                {% include 'subpages/_restriction_info.html' with item=post %}
+              </li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+      {% endfor %}
+    </ul>
+  {% endif %}
+</section>

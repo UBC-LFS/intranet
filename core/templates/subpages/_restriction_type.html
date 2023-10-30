@@ -1,0 +1,13 @@
+{% if item.get_view_restrictions %}
+
+  {% for res in item.get_view_restrictions %}
+    {% if 'login' in res.restriction_type %}
+      <span class="badge text-bg-light" style="font-size: 12px">Private, logged-in</span>
+    {% elif 'password' in res.restriction_type %}
+      <span class="badge text-bg-light" style="font-size: 12px">Private, password</span>
+    {% elif 'groups' in res.restriction_type %}
+      <span class="badge text-bg-light" style="font-size: 12px">Private, specific groups</span>
+    {% endif %}
+  {% endfor %}
+
+{% endif %}

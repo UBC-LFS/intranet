@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load wagtailcore_tags %}
+
+{% block title %}{{ page.title }}{% endblock %}
+
+{% block body_class %}body-{{ model_name }}{% endblock %}
+{% block main_class %}main-{{ model_name }}{% endblock %}
+{% block content_class %}content-{{ model_name }} page{% endblock %}
+
+{% block content %}
+
+<div class="two-columns">
+  <div class="column left-25">
+    {% include 'subpages/left_sidebar.html' with title=page.get_parent.title slug=page.get_parent.slug %}
+  </div>
+  <div class="column right-75">
+    <h2 class="page-title">{{ page.title }}</h2>
+
+    {% include 'subpages/publish_date.html' %}
+    {% include 'subpages/display_tags.html' %}
+
+    {% if page.body %}
+      <div class="page-content mt-5">{{ page.body }}</div>
+    {% endif %}
+  </div>
+</div>
+
+{% endblock %}

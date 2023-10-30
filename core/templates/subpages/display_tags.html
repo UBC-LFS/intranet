@@ -1,0 +1,8 @@
+{% if page.get_tags %}
+  Tags:
+  {% for tag in page.get_tags %}
+    <a class="tag" href="{{ tag.url }}">{{ tag }}</a>
+  {% endfor %}
+{% else %}
+  No tags found
+{% endif %}

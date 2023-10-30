@@ -1,5 +1,9 @@
 {% extends "base.html" %}
-{% load static %}
+{% load wagtailcore_tags %}
+
+{% block navbar %}
+  {% include 'subpages/navbar.html' with items=page.get_children %}
+{% endblock %}
 
 {% block body_class %}template-homepage{% endblock %}
 
