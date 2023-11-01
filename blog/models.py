@@ -1,7 +1,5 @@
 from django.conf import settings
 from django.db import models
-from django.db import models
-from wagtail.models import Page
 from wagtail import blocks
 from wagtail.models import Page
 from wagtail.fields import StreamField

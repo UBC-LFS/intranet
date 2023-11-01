@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     "new_to_lfs",
     "operations",
     "policies",
+    "blog",
     "home",
     "search",
     "wagtail.contrib.forms",
@@ -187,6 +188,7 @@ WAGTAIL_PASSWORD_MANAGEMENT_ENABLED = False
 WAGTAIL_PASSWORD_RESET_ENABLED = False
 WAGTAILUSERS_PASSWORD_ENABLED = False
 
+WAGTAIL_USER_CREATION_FORM = 'core.forms.CustomUserCreationForm'
 
 # LDAP Settings
 
