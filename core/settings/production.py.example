@@ -1,6 +1,7 @@
 from .base import *
 
 DEBUG = False
+LOCAL_LOGIN = False
 
 SECRET_KEY = os.environ['INTRANET_SECRET_KEY']
 

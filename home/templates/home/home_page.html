@@ -1,14 +1,29 @@
 {% extends "base.html" %}
 {% load wagtailcore_tags %}
+{% load static %}
 
-{% block navbar %}
-  {% include 'subpages/navbar.html' with items=page.get_children %}
-{% endblock %}
-
-{% block body_class %}template-homepage{% endblock %}
+{% block body_class %}body-homepage{% endblock %}
+{% block main_class %}main-homepage{% endblock %}
+{% block content_class %}content-homepage{% endblock %}
 
 {% block content %}
 
-<h1>{{ page.title }}</h1>
+<div class="two-columns">
+  <div class="column left-75">
+    <h1>Welcome to LFS Intranet</h1>
+    <div>{{ page.body }}</div>
+  </div>
+  <div class="column right-25">
+    <div class="bg-prompt">
+      <div class="prompt text-center p-4 mb-4">
+        <h4 class="text-primary">User login</h4>
+        <p>To log in, click on the CWL button below.<br /> You will be redirected to a secure CWL login.</p>
+        <a href="/app/">
+          <img src="{% static 'images/cwl_login_button.gif' %}" alt="cwl login button"/>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
 
 {% endblock content %}
