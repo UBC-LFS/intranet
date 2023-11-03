@@ -14,7 +14,10 @@
     {% include 'subpages/left_sidebar.html' with title=page.get_parent.title slug=page.get_parent.slug %}
   </div>
   <div class="column right-75">
-    <h2 class="page-title">{{ page.title }}</h2>
+    <h2 class="page-title">
+      {{ page.title }}
+      {% include 'subpages/_restriction_types.html' with item=page %}
+    </h2>
 
     {% include 'subpages/publish_date.html' %}
     {% include 'subpages/display_tags.html' %}
