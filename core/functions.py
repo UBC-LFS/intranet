@@ -5,6 +5,8 @@ from wagtail.models import Page
 def get_user_groups(request):
     return [ group.name for group in request.user.groups.all() ]
 
+def live_in_menu(obj):
+    return obj.live().in_menu()
 
 def get_page_restrictions(page):
     types = [ res.restriction_type for res in page.get_view_restrictions() ]
@@ -69,7 +71,7 @@ def add_menu(request, user_groups, menu, page, types, groups):
 def make_menu(request, user_groups, indexes=None):
     if not indexes:
         home = Page.objects.get(title=settings.WAGTAIL_SITE_NAME)
-        indexes = home.get_children().live().in_menu()
+        indexes = live_in_menu(home.get_children())
 
     menu = []
     for index in indexes:
@@ -78,15 +80,15 @@ def make_menu(request, user_groups, indexes=None):
         index.groups = groups
 
         children = []
-        pages = index.get_children().live().in_menu()
+        pages = live_in_menu(index.get_children())
         if len(pages) > 0:
-            for page in index.get_children().live().in_menu():
+            for page in live_in_menu(index.get_children()):
                 ts, gs = get_page_restrictions(page)
                 page.types = ts
                 page.groups = gs
 
                 childs = []
-                posts = page.get_children().live().in_menu()
+                posts = live_in_menu(page.get_children())
                 if len(posts) > 0:
                     for post in posts:
                         t, g = get_page_restrictions(post)
@@ -102,3 +104,26 @@ def make_menu(request, user_groups, indexes=None):
         menu = add_menu(request, user_groups, menu, index, types, groups)
 
     return menu
+
+def make_sidebar_menu(request, user_groups, index):
+    pages = live_in_menu(index.get_children())
+    children = []
+    if len(pages) > 0:
+        for page in pages:
+            ts, gs = get_page_restrictions(page)
+            page.types = ts
+            page.groups = gs
+
+            childs = []
+            posts = live_in_menu(page.get_children())
+            if len(posts) > 0:
+                for post in posts:
+                    t, g = get_page_restrictions(post)
+                    post.types = t
+                    post.groups = g
+                    childs = add_menu(request, user_groups, childs, post, t, g)
+            
+            page.children = childs
+            children = add_menu(request, user_groups, children, page, ts, gs)
+
+    return children

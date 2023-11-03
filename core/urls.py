@@ -11,7 +11,7 @@ from .views import Index
 
 urlpatterns = [
     path('app/admin/', include(wagtailadmin_urls)),
-    path('app/search/', search_views.search, name='search'),
+    path('search/', search_views.search, name='search'),
     path('app/', Index.as_view(), name='index')
 
     #path("documents/", include(wagtaildocs_urls))

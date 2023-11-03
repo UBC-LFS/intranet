@@ -45,8 +45,7 @@ class BlogPost(Page):
     def get_context(self, request):
         context = super(BlogPost, self).get_context(request)
         context['model_name'] = self._meta.model_name
-        context['navbar_menu'] = make_menu(request, get_user_groups(request))
-        context['sidebar_menu'] = make_menu(request, get_user_groups(request), self.get_parent().get_parent().get_children().live().in_menu())
+        context['sidebar_menu'] = make_sidebar_menu(request, get_user_groups(request), self.get_parent().get_parent())
         return context
 
     @property
@@ -81,8 +80,7 @@ class BlogPage(Page):
     def get_context(self, request):
         context = super(BlogPage, self).get_context(request)
         context['model_name'] = self._meta.model_name
-        context['navbar_menu'] = make_menu(request, get_user_groups(request))
-        context['sidebar_menu'] = make_menu(request, get_user_groups(request), self.get_parent().get_children().live().in_menu())
+        context['sidebar_menu'] = make_sidebar_menu(request, get_user_groups(request), self.get_parent())
         return context
 
     @property
@@ -115,6 +113,5 @@ class BlogIndex(RoutablePageMixin, Page):
     def get_context(self, request):
         context = super(BlogIndex, self).get_context(request)
         context['model_name'] = self._meta.model_name
-        context['navbar_menu'] = make_menu(request, get_user_groups(request))
-        context['sidebar_menu'] = make_menu(request, get_user_groups(request), self.get_children().live().in_menu())
+        context['sidebar_menu'] = make_sidebar_menu(request, get_user_groups(request), self)
         return context

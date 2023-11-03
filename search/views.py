@@ -3,10 +3,10 @@ from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.template.response import TemplateResponse
 
 from wagtail.models import Page
-from wagtail.search.models import Query
-from blog.models import BlogIndex, BlogPage, BlogPost
-
+from blog.models import BlogPage, BlogPost
 import re
+
+from core.functions import *
 
 def html_replace(text):
     t = re.sub(r'<[^>]*>', r' ', str(text)).split()
@@ -15,40 +15,54 @@ def html_replace(text):
 def get_tags(tags):
     return [ { 'url': tag.url, 'name': tag.name } for tag in tags ]
 
+
+def find_items(search_results, page, query):
+    model = page.specific.content_type.model
+    if model in ['blogindex', 'blogpage', 'blogpost'] and page.title.lower().find(query) > -1:
+        search_results.append(page)
+    else:
+        body = None
+        if model == 'blogindex':
+            body = html_replace(page.blogindex.body)
+        elif model == 'blogpage':
+            body = html_replace(page.blogpage.body)
+        elif model == 'blogpost':
+            body = html_replace(page.blogpost.body)
+
+        if body and body.find(query) > -1:
+            search_results.append(page)
+    return search_results
+
+
 def search(request):
+    #print(request.user.is_authenticated, request.user.is_superuser)
     method = request.GET.get('method', None)
     query = request.GET.get('query', '').strip().lower()
-    
-    pages = Page.objects.live()
     
     search_results = []
 
     # Tag Search    
     if method == 'tag':
         if query:
-            blog_pages = BlogPage.objects.filter(tags__name=query)
-            blog_posts = BlogPost.objects.filter(tags__name=query)
-            search_results = blog_pages.union(blog_posts)
+            blog_pages = live_in_menu(BlogPage.objects).filter(tags__name=query)
+            for page in blog_pages:
+                types, groups = get_page_restrictions(page)
+                search_results = add_menu(request, get_user_groups(request), search_results, page, types, groups)
+            
+            blog_posts = live_in_menu(BlogPost.objects).filter(tags__name=query)
+            for post in blog_posts:
+                types, groups = get_page_restrictions(post)
+                search_results = add_menu(request, get_user_groups(request), search_results, post, types, groups)
     else:
         # Search
         if query:
-            for page in pages:
-                if page.depth >= 3:
-                    if page.title.lower().find(query) > -1:
-                        search_results.append(page)
-                    else:
-                        model = page.specific.content_type.model
-
-                        body = None
-                        if model == 'blogindex':
-                            body = html_replace(page.blogindex.body)
-                        elif model == 'blogpage':
-                            body = html_replace(page.blogpage.body)
-                        elif model == 'blogpost':
-                            body = html_replace(page.blogpost.body)
-                        
-                        if body.find(query) > -1:
-                            search_results.append(page)
+            menu = make_menu(request, get_user_groups(request))
+            for index in menu:
+                search_results = find_items(search_results, index, query)
+                for pg in index.children:
+                    search_results = find_items(search_results, pg, query)
+                    for post in page.children:
+                        search_results = find_items(search_results, post, query)
 
     total_results = len(search_results)
     
