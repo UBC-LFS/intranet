@@ -1,18 +1,22 @@
 {% if request.user.is_authenticated and request.user.is_superuser %}
-  <span class="badge text-bg-light" style="font-size: 11px">
-    {% if 'login' in item.types %}
-      Private, logged-in
-    {% elif 'password' in item.types %}
-      Private, password
-    {% elif 'groups' in item.types %}
-      Private, specific groups
-    {% endif %}
-  </span>
 
-  {% if 'groups' in item.types %}
-    <br />
-    {% for group in item.groups %}
-      <span class="badge text-bg-warning" style="font-size: 11px">{{ group }}</span>
-    {% endfor %}
+  {% if item.types|length > 0 %}
+    <span class="badge text-bg-light" style="font-size: 11px">
+      {% if 'login' in item.types %}
+        Private, logged-in
+      {% elif 'password' in item.types %}
+        Private, password
+      {% elif 'groups' in item.types %}
+        Private, specific groups
+      {% endif %}
+    </span>
+
+    {% if 'groups' in item.types %}
+      <br />
+      {% for group in item.groups %}
+        <span class="badge text-bg-warning" style="font-size: 11px">{{ group }}</span>
+      {% endfor %}
+    {% endif %}
   {% endif %}
+
 {% endif %}

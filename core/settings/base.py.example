@@ -22,16 +22,6 @@ BASE_DIR = os.path.dirname(PROJECT_DIR)
 # Application definition
 
 INSTALLED_APPS = [
-    "about",
-    "finance",
-    # "new_to_lfs",
-    # "bookings",
-    # "communications",
-    # "faculty_resources",
-    # "human_resources",
-    # "operations",
-    # "policies",
-    
     "accounts",
     "blog",
     "home",
@@ -182,6 +172,8 @@ WAGTAILADMIN_BASE_URL = "http://localhost:8000"
 WAGTAIL_PASSWORD_MANAGEMENT_ENABLED = False
 WAGTAIL_PASSWORD_RESET_ENABLED = False
 WAGTAILUSERS_PASSWORD_ENABLED = False
+
+WAGTAILDOCS_SERVE_METHOD = 'direct'
 
 RICH_TEXT_FEATURES = [
     'h1','h2','h3','h4','h5','h6',

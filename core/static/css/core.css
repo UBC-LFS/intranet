@@ -10,6 +10,7 @@ body {
   font-family: 'Whitney SSm A', 'Whitney SSm B', Arial;
 }
 
+
 /* header */
 
 header { width: 100%; }
@@ -182,16 +183,17 @@ footer .footer-item {
 
 main { flex: 1 0 auto; }
 
+main .index div[class^='block-'],
+main .page div[class^='block-'],
+main .post div[class^='block-'] { margin: 1.5rem 0; }
+
 
 /*main > .content { padding: 0 50px 60px 50px; }*/
 /*main > nav > .dropdown { margin-right: 20px }
 main > nav > .dropdown > button { font-size: 1rem; }*/
 /*main .content h1 { margin: 40px 0; }*/
 
-/*main .index div[class^='block-'],
-main .page div[class^='block-'] { margin: 40px 0; }
-
-main .index .page-title,
+/*main .index .page-title,
 main .page .page-title {
   display: inline-block;
   color: #fff;
@@ -256,12 +258,11 @@ main .custom-form {
   display: flex;
   width: 350px;
 }
-
-.left-sidebar .sidebar-menu a {
-  text-decoration: none;
-}
+.left-sidebar { padding-right: 30px; }
+.left-sidebar .sidebar-menu a { text-decoration: none; }
 .left-sidebar .sidebar-menu a:hover { text-decoration: underline; }
 .left-sidebar .sidebar-menu .menu-page:not(:first-child) { margin-top: 10px; }
+.left-sidebar .sidebar-menu .menu-page { font-size: 1.1rem; }
 
 .content-search-page .search-results a { text-decoration: none; }
 .content-search-page .search-results a:hover { text-decoration: underline; }

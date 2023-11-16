@@ -5,3 +5,4 @@ core/settings/production.py
 /static
 manage.py
 core/wsgi.py
+blog/fixtures

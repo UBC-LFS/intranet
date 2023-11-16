@@ -10,7 +10,7 @@
     <h4>Menu</h4>
     <ul class="sidebar-menu ps-0" style="list-style-type: none;">
       {% for page in sidebar_menu %}
-        <li class="menu-page fs-5">
+        <li class="menu-page">
           <a href="{% pageurl page %}">{{ page.title }}</a>
           {% include 'subpages/_restriction_info.html' with item=page %}
         </li>
