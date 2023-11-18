@@ -23,8 +23,8 @@ header .log-in-out {
    display: table;
 }
 
-header .log-in-out > a { text-decoration: none; }
-header .log-in-out > a:hover { text-decoration: underline; }
+header nav a { text-decoration: none; }
+header nav a:hover { text-decoration: underline; }
 
 .navbar-toggler {
   background-color: #fff;
@@ -36,6 +36,8 @@ header .log-in-out > a:hover { text-decoration: underline; }
   height: 20px;
 }
 
+.navbar-wrapper .navbar .navbar-nav .nav-item:hover { background-color: #ccc; }
+.navbar-wrapper .navbar .navbar-nav .dropdown-menu .dropdown-item:hover { background-color: #ddd; }
 
 /*header .navbar .navbar-toggler { border: 1px solid #fff; }
 header .navbar .navbar-brand { margin-right: 150px; }

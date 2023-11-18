@@ -47,7 +47,7 @@
               <img class="me-3" src="{% static 'images/UBC-logo-2018-crest-white-rgb300.png' %}" alt="UBC logo" height="40" />
               <a class="site-title text-white fs-5" href="/">LFS Intranet</a>
             </div>
-            <div class="col-lg-4">
+            <div class="col-lg-3">
               <form class="serach d-flex" action="/search/" method="GET" role="search">
                 <input class="form-control form-control-sm me-2" name="query" type="search" aria-label="Search" placeholder="Enter" />
                 <button class="btn btn-sm btn-outline-light" type="submit">
@@ -55,10 +55,17 @@
                 </button>
               </form>
             </div>
-            <div class="col-lg-5">
+            <div class="col-lg-2">
+              {% if request.user.is_authenticated %}
+                <div class="text-end">
+                  <a class="text-white" href="/admin/">Admin Portal</a>
+                </div>
+              {% endif %}
+            </div>
+            <div class="col-lg-4">
               <div class="log-in-out text-white">
                 {% if request.user.is_authenticated %}
-                  Hi, {{ request.user.username }} ({% if request.user.is_superuser %}Admin{% if request.user.groups.count > 0 %}, {% endif %}{% endif %}{% for group in request.user.groups.all %}{{ group.name }}{% if not forloop.last %}, {% endif %}{% endfor %})
+                  Hi, {% include 'subpages/_display_name.html' %}
                   <a class="btn-logout text-white ms-4" href="/Shibboleth.sso/Logout">
                     Log out
                     <span class="material-symbols-outlined">logout</span>
@@ -82,7 +89,7 @@
               <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 {% for index in navbar_menu %}
                   {% if index.children|length > 0 %}
-                    <li class="nav-item dropdown">
+                    <li class="nav-item dropdown me-2">
                       <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         {{ index.title }}
                       </a>
@@ -96,7 +103,7 @@
                       </ul>
                     </li>
                   {% else %}
-                    <li class="nav-item">
+                    <li class="nav-item me-2">
                       <a class="nav-link" href="{% pageurl index %}">{{ index.title }}</a>
                     </li>
                   {% endif %}

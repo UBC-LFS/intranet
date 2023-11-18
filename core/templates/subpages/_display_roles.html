@@ -1,0 +1,9 @@
+{% if request.user.is_superuser %}
+  Admin
+  {% if request.user.groups.count > 0 %}, {% endif %}
+{% endif %}
+
+{% for group in request.user.groups.all %}
+  {{ group.name }}
+  {% if not forloop.last %}, {% endif %}
+{% endfor %}

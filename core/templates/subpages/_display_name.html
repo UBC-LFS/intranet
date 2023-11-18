@@ -1,0 +1,5 @@
+{% if request.user.get_full_name %}
+  {{ request.user.get_full_name }}
+{% else %}
+  {{ request.user.username }}
+{% endif %}

@@ -24,6 +24,7 @@ BASE_DIR = os.path.dirname(PROJECT_DIR)
 INSTALLED_APPS = [
     "accounts",
     "blog",
+    "app",
     "home",
     "search",
     "wagtail.contrib.forms",
@@ -55,10 +56,15 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "django.middleware.security.SecurityMiddleware",
-    'whitenoise.middleware.WhiteNoiseMiddleware',
+    "whitenoise.middleware.WhiteNoiseMiddleware",
+    "django.contrib.auth.middleware.RemoteUserMiddleware", # for shibboleth
     "wagtail.contrib.redirects.middleware.RedirectMiddleware"
 ]
 
+# for shibboleth
+AUTHENTICATION_BACKENDS = [
+    "django.contrib.auth.backends.RemoteUserBackend"
+]
 
 ROOT_URLCONF = "core.urls"
 

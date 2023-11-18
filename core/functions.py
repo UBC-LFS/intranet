@@ -2,6 +2,11 @@ from django.conf import settings
 from wagtail.models import Page
 
 
+def get_home():
+    root = Page.objects.get(title=settings.WAGTAIL_SITE_ROOT_NAME)
+    return root.get_children()[0].specific
+
+
 def get_user_groups(request):
     return [ group.name for group in request.user.groups.all() ]
 
@@ -70,7 +75,8 @@ def add_menu(request, user_groups, menu, page, types, groups):
 
 def make_menu(request, user_groups, indexes=None):
     if not indexes:
-        home = Page.objects.get(title=settings.WAGTAIL_SITE_NAME)
+        #home = Page.objects.get(title=settings.WAGTAIL_SITE_NAME)
+        home = get_home()
         indexes = live_in_menu(home.get_children())
 
     menu = []

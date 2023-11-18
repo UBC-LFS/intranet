@@ -1,10 +1,30 @@
 from django.conf import settings
+from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.views import View
 from django.utils.decorators import method_decorator
 from django.views.decorators.http import require_GET
 from django.views.decorators.cache import never_cache
 from django.core.exceptions import SuspiciousOperation
+
+from core.functions import get_home
+
+
+@method_decorator([never_cache], name='dispatch')
+class LandingPage(View):
+
+    @method_decorator(require_GET)
+    def get(self, request, *args, **kwargs):
+        return render(request, 'app/landing_page.html', {
+            'page': get_home()
+        })
+
+@method_decorator([never_cache], name='dispatch')
+class Logout(View):
+
+    @method_decorator(require_GET)
+    def get(self, request, *args, **kwargs):
+        return HttpResponseRedirect('/Shibboleth.sso/Logout')
 
 
 def get_data(meta, field):
@@ -19,17 +39,13 @@ class Index(View):
 
     @method_decorator(require_GET)
     def get(self, request, *args, **kwargs):
-        full_name = get_data(request.META, 'full_name')
+        first_name = get_data(request.META, 'first_name')
         last_name = get_data(request.META, 'last_name')
         email = get_data(request.META, 'email')
         username = get_data(request.META, 'username')
 
         if not username:
             raise SuspiciousOperation
-        
-        first_name = 'Firstname'
-        if full_name:
-            first_name = full_name.split(last_name)[0].strip()
 
         # Update user information if it's None
         update_fields = []

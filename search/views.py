@@ -38,17 +38,17 @@ def search(request):
     #print(request.user.is_authenticated, request.user.is_superuser)
     method = request.GET.get('method', None)
     query = request.GET.get('query', '').strip().lower()
-    
+
     search_results = []
 
-    # Tag Search    
+    # Tag Search
     if method == 'tag':
         if query:
             blog_pages = live_in_menu(BlogPage.objects).filter(tags__name=query)
             for page in blog_pages:
                 types, groups = get_page_restrictions(page)
                 search_results = add_menu(request, get_user_groups(request), search_results, page, types, groups)
-            
+
             blog_posts = live_in_menu(BlogPost.objects).filter(tags__name=query)
             for post in blog_posts:
                 types, groups = get_page_restrictions(post)
@@ -61,11 +61,11 @@ def search(request):
                 search_results = find_items(search_results, index, query)
                 for pg in index.children:
                     search_results = find_items(search_results, pg, query)
-                    for post in page.children:
+                    for post in pg.children:
                         search_results = find_items(search_results, post, query)
 
     total_results = len(search_results)
-    
+
     page = request.GET.get('page', 1)
 
     # Pagination
@@ -92,7 +92,8 @@ def search(request):
             item.tags = get_tags(item.specific.blogpost.get_tags)
 
     return TemplateResponse(request, 'search/search.html', {
-        'home_page': Page.objects.get(title=settings.WAGTAIL_SITE_NAME),
+        #'home_page': Page.objects.get(title=settings.WAGTAIL_SITE_NAME),
+        'home_page': get_home(),
         'method': method,
         'query': query,
         'total_results': total_results,
