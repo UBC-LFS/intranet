@@ -6,6 +6,7 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.http import require_GET
 from django.views.decorators.cache import never_cache
 from django.core.exceptions import SuspiciousOperation
+from django.contrib.auth import logout
 
 from core.functions import get_home
 
@@ -19,11 +20,13 @@ class LandingPage(View):
             'page': get_home()
         })
 
+
 @method_decorator([never_cache], name='dispatch')
 class Logout(View):
 
     @method_decorator(require_GET)
     def get(self, request, *args, **kwargs):
+        logout(request)
         return HttpResponseRedirect('/Shibboleth.sso/Logout')
 
 
@@ -35,7 +38,7 @@ def get_data(meta, field):
 
 
 @method_decorator([never_cache], name='dispatch')
-class Index(View):
+class Login(View):
 
     @method_decorator(require_GET)
     def get(self, request, *args, **kwargs):

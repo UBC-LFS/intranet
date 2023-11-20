@@ -1,4 +1,4 @@
-{% load static wagtailcore_tags wagtailuserbar %}
+{% load static wagtailcore_tags %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -37,8 +37,6 @@
   </head>
 
   <body class="{% block body_class %}{% endblock %}">
-    {% wagtailuserbar %}
-
     <header>
       <nav class="custom-bg-primary py-2">
         <div class="container">
@@ -55,18 +53,22 @@
                 </button>
               </form>
             </div>
-            <div class="col-lg-2">
+            <div class="col-lg-3">
               {% if request.user.is_authenticated %}
                 <div class="text-end">
                   <a class="text-white" href="/admin/">Admin Portal</a>
+
+                  {% if current_page %}
+                    <a class="text-white ms-4" href="/admin/pages/{{ current_page.id }}/edit/">Edit Page</a>
+                  {% endif %}
                 </div>
               {% endif %}
             </div>
-            <div class="col-lg-4">
+            <div class="col-lg-3">
               <div class="log-in-out text-white">
                 {% if request.user.is_authenticated %}
-                  Hi, {% include 'subpages/_display_name.html' %}
-                  <a class="btn-logout text-white ms-4" href="/Shibboleth.sso/Logout">
+                  Hi, {{ request.user.username }}
+                  <a class="btn-logout text-white ms-4" href="{% url 'logout' %}">
                     Log out
                     <span class="material-symbols-outlined">logout</span>
                   </a>

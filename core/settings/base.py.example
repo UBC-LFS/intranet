@@ -79,7 +79,8 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
-                "core.context_processors.navbar_menu"
+                "core.context_processors.navbar_menu",
+                "core.context_processors.current_page"
             ],
         },
     },
@@ -161,6 +162,7 @@ MEDIA_URL = "/media/"
 
 # Wagtail settings
 
+WAGTAIL_SITE_ROOT_NAME = "Root"
 WAGTAIL_SITE_NAME = "Home"
 
 # Search
@@ -181,6 +183,15 @@ WAGTAILUSERS_PASSWORD_ENABLED = False
 
 WAGTAILDOCS_SERVE_METHOD = 'direct'
 
+ADMIN_PORTAL_HOME_PAGE = '/admin/'
+
+SHIB_ATTR_MAP = {
+    'full_name': '',
+    'last_name': '',
+    'email': '',
+    'username': ''
+}
+
 RICH_TEXT_FEATURES = [
     'h1','h2','h3','h4','h5','h6',
     'bold','italic',
@@ -193,37 +204,4 @@ RICH_TEXT_FEATURES = [
     'blockquote'
 ]
 
-ADMIN_PORTAL_HOME_PAGE = '/app/admin/'
-
-SHIB_ATTR_MAP = {
-    'full_name': '',
-    'last_name': '',
-    'email': '',
-    'username': ''
-}
-
 #WAGTAIL_USER_CREATION_FORM = 'core.forms.CustomUserCreationForm'
-
-# LDAP Settings
-
-# AUTHENTICATION_BACKENDS = [
-#     'django.contrib.auth.backends.ModelBackend',
-#     'core.backends.CustomLDAPBackend'
-# ]
-
-
-# INTRANET_LDAP_URI = os.environ['INTRANET_LDAP_URI']
-# INTRANET_LDAP_AUTH_DN = os.environ['INTRANET_LDAP_AUTH_DN']
-# INTRANET_LDAP_AUTH_PASSWORD = os.environ['INTRANET_LDAP_AUTH_PASSWORD']
-# INTRANET_LDAP_MEMBER_DN = os.environ['INTRANET_LDAP_MEMBER_DN']
-# INTRANET_LDAP_SEARCH_FILTER = os.environ['INTRANET_LDAP_SEARCH_FILTER']
-
-# LDAP_ATTR_MAP = {
-#     'username': 'uid',
-#     'email': 'mail',
-#     'full_name': 'cn',
-#     'last_name': 'sn'
-# }
-
-#DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
-

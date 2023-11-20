@@ -10,10 +10,10 @@ from search import views as search_views
 from app import views as app_views
 
 urlpatterns = [
-    path('app/admin/', include(wagtailadmin_urls)),
-    path('app/search/', search_views.search, name='search'),
-    
-    path('app/', app_views.Index.as_view(), name='index'),
+    path('admin/', include(wagtailadmin_urls)),
+    path('search/', search_views.search, name='search'),
+    path('logout/', app_views.Logout.as_view(), name='logout'),
+    path('app/', app_views.Login.as_view(), name='login'),
     path('', app_views.LandingPage.as_view(), name='landing_page')
 
     #path("documents/", include(wagtaildocs_urls))
@@ -37,7 +37,7 @@ urlpatterns = urlpatterns + [
     # For anything not caught by a more specific rule above, hand over to
     # Wagtail's page serving mechanism. This should be the last pattern in
     # the list:
-    path('app/lfs-intranet/', include(wagtail_urls)),
+    path('lfs-intranet/', include(wagtail_urls)),
     # Alternatively, if you want Wagtail pages to be served from a subpath
     # of your site, rather than the site root:
     #    path("pages/", include(wagtail_urls)),
