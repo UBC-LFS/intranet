@@ -14,7 +14,7 @@ def navbar_menu(request):
 def current_page(request):
     full_path = request.get_full_path()
     if full_path == '/':
-        full_path = slugify(settings.WAGTAIL_SITE_NAME)
+        full_path = '/' + slugify(settings.WAGTAIL_SITE_NAME) + '/'
 
     page = Page.objects.filter(url_path=full_path)
     return {
