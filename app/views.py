@@ -68,7 +68,9 @@ class Login(View):
         if created:
             print('A new role, Members, has been created successfully')
 
-        request.user.group.add(group)
+        # for initial users
+        if not request.user.is_superuser and request.user.groups.count() == 0:
+            request.user.group.add(group)
 
         return HttpResponseRedirect(settings.ADMIN_PORTAL_HOME_PAGE)
     
