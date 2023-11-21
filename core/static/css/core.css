@@ -14,10 +14,15 @@ body {
 /* header */
 
 header { width: 100%; }
-header .site-title {
+
+header .brand-wrapper { height: 40px; }
+header .brand-wrapper > img { margin-top: -5px; }
+header .brand-wrapper > .site-title {
   position: inherit;
   text-decoration: none;
+  line-height: 40px;
 }
+
 header .log-in-out {
    margin-left: auto;
    display: table;
@@ -39,58 +44,6 @@ header nav a:hover { text-decoration: underline; }
 .navbar-wrapper .navbar .navbar-nav .nav-item:hover { background-color: #ccc; }
 .navbar-wrapper .navbar .navbar-nav .dropdown-menu .dropdown-item:hover { background-color: #ddd; }
 
-/*header .navbar .navbar-toggler { border: 1px solid #fff; }
-header .navbar .navbar-brand { margin-right: 150px; }
-header .navbar .nav-item .nav-link {
-  color: #fff;
-  text-decoration: none;
-  margin-left: 20px;
-}
-header .navbar .nav-item .nav-link:hover { text-decoration: underline; }
-header .navbar .navbar-nav {
-  width: 100%;
-  align-items: center;
-}
-header .navbar .navbar-nav form { width: 40%; }*/
-
-/*
-header .navbar .navbar-nav .log-in-out { margin-left: auto; }
-header .navbar .navbar-nav .btn-logout { text-decoration: none; }
-header .navbar .navbar-nav .btn-logout:hover { text-decoration: underline; }
-*/
-
-
-@media (max-width: 575.98px) {
-  /*header .navbar .navbar-brand { margin-right: 0; }
-  header .navbar .navbar-nav form {
-    width: 100%;
-    margin: 10px 0;
-  }
-  header .navbar .navbar-nav .log-in-out { margin-left: inherit; }*/
-}
-
-@media (max-width: 767.98px) {
-  /*header .navbar .navbar-brand { margin-right: 0; }
-  header .navbar .navbar-nav form {
-    width: 100%;
-    margin: 10px 0;
-  }
-  header .navbar .navbar-nav .log-in-out { margin-left: inherit; }*/
-}
-
-@media (max-width: 991.98px) {
-  /*header .navbar .navbar-brand { margin-right: 0; }
-  header .navbar .navbar-nav form {
-    width: 100%;
-    margin: 10px 0;
-  }
-  header .navbar .navbar-nav .log-in-out { margin-left: inherit; }*/
-}
-
-@media (max-width: 1199.98px) {
-  /*header .navbar .navbar-brand { margin-right: 70px; }*/
-}
-
 .navbar-wrapper {
   margin-bottom: 30px;
   background-color: #e9ecef;
@@ -99,57 +52,6 @@ header .navbar .navbar-nav .btn-logout:hover { text-decoration: underline; }
 .navbar-wrapper .nav-link {
   color: #212529;
 }
-
-/*.sub-nav {
-  margin-bottom: 30px;
-  width: 100%;
-  background-color: #ddd;
-  margin-bottom: 30px;
-  padding: 7px 0;
-}
-
-.sub-nav .dropbtn {
-  background-color: inherit;
-  border: none;
-  padding: 0;
-}
-
-.sub-nav .dropbtn:hover { background-color: #aaa; }
-
-.sub-nav .dropdown-content {
-  position: absolute;
-  display: none;
-  padding: 10px 20px;
-  background-color: #f1f1f1;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 10;
-}
-
-.sub-nav .nav-item,
-.sub-nav .dropdown-content .nav-child {
-  color: #212529;
-  text-decoration: none;
-}
-.sub-nav .nav-item { display: inline-block; }
-.sub-nav .dropdown-content .nav-child { display: block; }
-
-.sub-nav .nav-item:not(:first-child) { margin-left: 30px; }
-.sub-nav .nav-item:hover,
-.sub-nav .dropdown-content .nav-child:hover { text-decoration: underline; }
-
-.sub-nav .show { display:block; }
-
-.sub-nav .dropbtn:focus .dropdown-content {
-  transform: translateY(20px);
-}*/
-
-/*.sub-nav .item { float: right; }
-.sub-nav .item > a {
-  color: #212529;
-  text-decoration: none;
-}
-.sub-nav .item > a:hover { text-decoration: underline; }*/
-
 
 /* footer */
 
@@ -171,15 +73,6 @@ footer .footer-item {
   vertical-align: middle;
 }
 
-@media (max-width: 575.98px) {
-  footer > .container {
-    height: 200px;
-    display: flex;
-    flex-direction: column;
-  }
-  footer .footer-item { padding: 30px 0; }
-}
-
 
 /* main */
 
@@ -189,31 +82,6 @@ main .index div[class^='block-'],
 main .page div[class^='block-'],
 main .post div[class^='block-'] { margin: 1.5rem 0; }
 
-
-/*main > .content { padding: 0 50px 60px 50px; }*/
-/*main > nav > .dropdown { margin-right: 20px }
-main > nav > .dropdown > button { font-size: 1rem; }*/
-/*main .content h1 { margin: 40px 0; }*/
-
-/*main .index .page-title,
-main .page .page-title {
-  display: inline-block;
-  color: #fff;
-  padding: 10px 20px;
-  border-radius: 4px;
-}
-main .index .page-title { background-color: #198754; }
-main .page .page-title { background-color: #40B4E5; }
-
-
-main .index ul,
-main .page ul { margin-left: 40px; }
-
-main .index ul li a,
-main .page ul li a { text-decoration: none; }
-
-main .index ul li a:hover,
-main .page ul li a:hover { text-decoration: underline;; }*/
 
 /* Two columns */
 /* Clear floats after the columns */
@@ -238,21 +106,6 @@ main .entry-content .left-75 { width: 75%; }
   main .entry-content { width: 100%; }
 }
 
-/*main .page-tags .tag {
-  text-decoration: none;
-  border: 1px solid #c55302;
-  border-radius: 30px;
-  padding: 3px 7px;
-  margin-right: 2px;
-  margin-bottom: 7px;
-  background-color: #c55302;
-  color: #fff;
-  display: inline-block;
-}*/
-
-/*main .page-tags .tag:hover {
-  opacity: 0.85;
-}*/
 
 /* form */
 
@@ -299,17 +152,25 @@ main .custom-form {
   color: #474d52;
 }
 
-/* `sm` applies to x-small devices (portrait phones, less than 576px) */
-@media (max-width: 575.98px) {}
 
-/* `md` applies to small devices (landscape phones, less than 768px) */
+/* sm applies to x-small devices (portrait phones, less than 576px) */
+@media (max-width: 575.98px) {
+  footer > .container {
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+  }
+  footer .footer-item { padding: 30px 0; }
+}
+
+/* md applies to small devices (landscape phones, less than 768px) */
 @media (max-width: 767.98px) {}
 
-/* `lg` applies to medium devices (tablets, less than 992px) */
+/* lg applies to medium devices (tablets, less than 992px) */
 @media (max-width: 991.98px) {}
 
-/* `xl` applies to large devices (desktops, less than 1200px) */
+/* xl applies to large devices (desktops, less than 1200px) */
 @media (max-width: 1199.98px) {}
 
-/* `xxl` applies to x-large devices (large desktops, less than 1400px) */
+/* xxl applies to x-large devices (large desktops, less than 1400px) */
 @media (max-width: 1399.98px) {}
