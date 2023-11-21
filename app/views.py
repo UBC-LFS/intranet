@@ -70,7 +70,7 @@ class Login(View):
 
         # for initial users
         if not request.user.is_superuser and request.user.groups.count() == 0:
-            request.user.group.add(group)
+            request.user.groups.add(group)
 
         return HttpResponseRedirect(settings.ADMIN_PORTAL_HOME_PAGE)
     
