@@ -204,4 +204,6 @@ RICH_TEXT_FEATURES = [
     'blockquote'
 ]
 
+MEMBERS_ROLE_NAME = 'Members'
+
 #WAGTAIL_USER_CREATION_FORM = 'core.forms.CustomUserCreationForm'
