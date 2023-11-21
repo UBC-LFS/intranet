@@ -29,7 +29,8 @@ header .log-in-out {
 }
 
 header nav a { text-decoration: none; }
-header nav a:hover { text-decoration: underline; }
+header nav a:hover,
+header .brand-wrapper > .site-title:hover { text-decoration: underline; }
 
 .navbar-toggler {
   background-color: #fff;
