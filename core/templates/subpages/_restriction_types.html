@@ -7,6 +7,11 @@
       <span class="badge text-bg-light" style="font-size: 12px">Private, password</span>
     {% elif 'groups' in res.restriction_type %}
       <span class="badge text-bg-light" style="font-size: 12px">Private, specific groups</span>
+
+      {% for group in res.groups.all %}
+        <span class="badge text-bg-warning" style="font-size: 11px">{{ group }}</span>
+      {% endfor %}
+
     {% endif %}
   {% endfor %}
 
