@@ -9,7 +9,6 @@ from django.views.decorators.http import require_GET
 from django.views.decorators.cache import never_cache
 from django.core.exceptions import SuspiciousOperation
 
-
 from core.functions import get_home
 
 
@@ -37,7 +36,6 @@ class Login(View):
 
     @method_decorator(require_GET)
     def get(self, request, *args, **kwargs):
-
         first_name = get_data(request.META, 'first_name')
         last_name = get_data(request.META, 'last_name')
         email = get_data(request.META, 'email')

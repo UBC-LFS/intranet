@@ -5,6 +5,10 @@ from django.utils.text import slugify
 
 from core.functions import *
 
+def can_access_wagtail_admin(request):
+    return {
+        'can_access_wagtail_admin': request.user.has_perm('wagtailadmin.access_admin')
+    }
 
 def navbar_menu(request):
     return {
