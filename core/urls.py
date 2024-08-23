@@ -8,12 +8,14 @@ from wagtail.documents import urls as wagtaildocs_urls
 
 from search import views as search_views
 from app import views as app_views
+from blog import views as blog_views
 
 urlpatterns = [
     path('admin/', include(wagtailadmin_urls)),
     path('search/', search_views.search, name='search'),
     path('logout/', app_views.Logout.as_view(), name='logout'),
     path('app/', app_views.Login.as_view(), name='login'),
+    path('lfs-intranet/directory/', blog_views.Directory.as_view(), name='directory'),
     path('', app_views.LandingPage.as_view(), name='landing_page')
 
     #path("documents/", include(wagtaildocs_urls))

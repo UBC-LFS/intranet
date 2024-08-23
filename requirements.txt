@@ -2,3 +2,5 @@ Django>=4.2
 wagtail>=5.2
 psycopg2-binary>=2.9.6
 whitenoise>=6.4.0
+requests>=2.30.0
+apscheduler>=3.10.1
