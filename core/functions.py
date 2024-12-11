@@ -75,7 +75,6 @@ def add_menu(request, user_groups, menu, page, types, groups):
 
 def make_menu(request, user_groups, indexes=None):
     if not indexes:
-        #home = Page.objects.get(title=settings.WAGTAIL_SITE_NAME)
         home = get_home()
         indexes = live_in_menu(home.get_children())
 

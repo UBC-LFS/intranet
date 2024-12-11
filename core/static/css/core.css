@@ -153,6 +153,30 @@ main .custom-form {
   color: #474d52;
 }
 
+.accordion-item-content {
+  display: none;
+  padding: 10px;
+  background: #f9f9f9;
+}
+
+.accordion-item.open .accordion-item-content {
+  display: block;
+}
+
+table {
+  width: 100%;
+  vertical-align: top;
+  border-collapse: collapse;
+}
+
+table, th, td {
+  border: 1px solid #dee2e6;
+}
+
+table>:not(caption) > * > * {
+  padding: .5rem .5rem;
+}
+
 
 /* sm applies to x-small devices (portrait phones, less than 576px) */
 @media (max-width: 575.98px) {

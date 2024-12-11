@@ -15,7 +15,7 @@ urlpatterns = [
     path('search/', search_views.search, name='search'),
     path('logout/', app_views.Logout.as_view(), name='logout'),
     path('app/', app_views.Login.as_view(), name='login'),
-    path('lfs-intranet/directory/', blog_views.Directory.as_view(), name='directory'),
+    # path('lfs-intranet/directory/', blog_views.Directory.as_view(), name='directory'),
     path('', app_views.LandingPage.as_view(), name='landing_page')
 
     #path("documents/", include(wagtaildocs_urls))

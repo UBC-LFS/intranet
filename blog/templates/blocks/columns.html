@@ -1,0 +1,9 @@
+{% load wagtailcore_tags %}
+
+<div class="row">
+  {% for column in self.columns %}
+    <div class="col-{{ column.width }}">
+      {% include_block column %}
+    </div>
+  {% endfor %}
+</div>

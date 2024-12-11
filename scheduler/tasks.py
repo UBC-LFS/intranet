@@ -8,6 +8,6 @@ def run():
     scheduler = BackgroundScheduler(timezone=settings.TIME_ZONE)
 
     # Run it every day at 2 AM
-    scheduler.add_job(get_data, 'cron', hour=2, minute=5)
+    # scheduler.add_job(get_data, 'cron', hour=2, minute=5)
 
-    scheduler.start()
+    # scheduler.start()

@@ -11,22 +11,34 @@ from modelcluster.contrib.taggit import ClusterTaggableManager
 from taggit.models import TaggedItemBase
 from wagtail.contrib.routable_page.models import RoutablePageMixin
 
+from .blocks import AccordionBlock, ColumnsBlock, CustomTableBlock
 from core.functions import *
 
 
 class BlogPageTag(TaggedItemBase):
     content_object = ParentalKey('BlogPage', related_name='tagged_items', on_delete=models.CASCADE)
 
+
 class BlogPostTag(TaggedItemBase):
     content_object = ParentalKey('BlogPost', related_name='tagged_items', on_delete=models.CASCADE)
 
+
+table_options = {
+    'colHeaders': False
+}
+
 class BlogPost(Page):
     publish_date = models.DateField('Publish date', blank=True, null=True)
+    
     body = StreamField([
         ('visual', blocks.RichTextBlock(features=settings.RICH_TEXT_FEATURES)),
         ('html', blocks.RawHTMLBlock()),
-        ('image', ImageChooserBlock())
+        ('image', ImageChooserBlock()),
+        ('accordion', AccordionBlock()),
+        ('columns', ColumnsBlock()),
+        ('table', CustomTableBlock())
     ], use_json_field=True, blank=True)
+
     tags = ClusterTaggableManager(through=BlogPostTag, blank=True)
 
     search_fields = Page.search_fields + [
@@ -55,13 +67,18 @@ class BlogPost(Page):
             tag.url = f"/search/?query={tag.slug}&method=tag&page=1"
         return tags
 
+
 class BlogPage(Page):
     publish_date = models.DateField('Publish date', blank=True, null=True)
     body = StreamField([
         ('visual', blocks.RichTextBlock(features=settings.RICH_TEXT_FEATURES)),
         ('html', blocks.RawHTMLBlock()),
-        ('image', ImageChooserBlock())
+        ('image', ImageChooserBlock()),
+        ('accordion', AccordionBlock()),
+        ('columns', ColumnsBlock()),
+        ('table', CustomTableBlock())
     ], use_json_field=True, blank=True)
+
     tags = ClusterTaggableManager(through=BlogPageTag, blank=True)
 
     search_fields = Page.search_fields + [
@@ -96,7 +113,10 @@ class BlogIndex(RoutablePageMixin, Page):
     body = StreamField([
         ('visual', blocks.RichTextBlock(features=settings.RICH_TEXT_FEATURES)),
         ('html', blocks.RawHTMLBlock()),
-        ('image', ImageChooserBlock())
+        ('image', ImageChooserBlock()),
+        ('accordion', AccordionBlock()),
+        ('columns', ColumnsBlock()),
+        ('table', CustomTableBlock())
     ], use_json_field=True, blank=True)
 
     search_fields = Page.search_fields + [

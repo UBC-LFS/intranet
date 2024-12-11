@@ -35,7 +35,6 @@ def find_items(search_results, page, query):
 
 
 def search(request):
-    #print(request.user.is_authenticated, request.user.is_superuser)
     method = request.GET.get('method', None)
     query = request.GET.get('query', '').strip().lower()
 
@@ -92,7 +91,6 @@ def search(request):
             item.tags = get_tags(item.specific.blogpost.get_tags)
 
     return TemplateResponse(request, 'search/search.html', {
-        #'home_page': Page.objects.get(title=settings.WAGTAIL_SITE_NAME),
         'home_page': get_home(),
         'method': method,
         'query': query,

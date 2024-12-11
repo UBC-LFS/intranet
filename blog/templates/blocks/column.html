@@ -1,0 +1,30 @@
+{% load wagtailcore_tags %}
+{% load wagtailimages_tags %}
+{% load template_utils %}
+
+<div class="column-content">
+  {% for block in self.content %}
+      {% if block.block_type == "image" %}
+        {% image block.value.image original as img %}
+          {% if img.focal_point %}
+            <div style="{% if block.value.width %}width={{ block.value.width }}px;{% endif %}{% if block.value.height %}height={{ block.value.height }}px;{% endif %}">
+              <img
+                src="{{ img.url }}"
+                alt="{{ img.alt }}"
+                {% if img.focal_point %}
+                  style="margin-top: -{{ img.focal_point.top }}px; margin-left: -{{ img.focal_point.left }}px; clip-path: inset({{ img.focal_point.top }}px {{ img.width|minus:img.focal_point.right }}px {{ img.height|minus:img.focal_point.bottom }}px {{ img.focal_point.left }}px);"
+                {% endif %}
+              />
+            </div>
+          {% else %}
+            <img
+              src="{{ img.url }}"
+              alt="{{ img.alt }}"
+              {% if block.value.width %}width="{{ block.value.width }}"{% endif %} {% if block.value.height %}height="{{ block.value.height }}"{% endif %}
+            />
+        {% endif %}
+      {% else %}
+        {% include_block block %}
+      {% endif %}
+  {% endfor %}
+</div>
