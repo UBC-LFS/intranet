@@ -189,10 +189,24 @@ table>:not(caption) > * > * {
 }
 
 /* md applies to small devices (landscape phones, less than 768px) */
-@media (max-width: 767.98px) {}
+@media (max-width: 767.98px) {
+}
 
 /* lg applies to medium devices (tablets, less than 992px) */
-@media (max-width: 991.98px) {}
+@media (max-width: 991.98px) {
+  header .brand-wrapper { text-align: center;}
+  header .page-wrapper,
+  header .log-in-out {
+    display: flex;
+    justify-content: space-evenly;
+  }
+  header .col-wrapper {
+    margin-bottom: 8px;
+  }
+  main .entry-content .left-25,
+  main .entry-content .right-75 { width: 100%; }
+  main .entry-content .right-75 { margin-top: 30px; }
+}
 
 /* xl applies to large devices (desktops, less than 1200px) */
 @media (max-width: 1199.98px) {}
