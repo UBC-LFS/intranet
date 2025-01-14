@@ -186,11 +186,28 @@ table>:not(caption) > * > * {
     flex-direction: column;
   }
   footer .footer-item { padding: 30px 0; }
+
+  main .entry-content img {
+    max-width: 380px;
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+  }
+}
+
+@media (min-width: 576px) and (max-width: 991.98px) {
+  main .entry-content img {
+    max-width: 500px;
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+  }
 }
 
 /* md applies to small devices (landscape phones, less than 768px) */
-@media (max-width: 767.98px) {
-}
+@media (max-width: 767.98px) {}
 
 /* lg applies to medium devices (tablets, less than 992px) */
 @media (max-width: 991.98px) {
@@ -213,3 +230,13 @@ table>:not(caption) > * > * {
 
 /* xxl applies to x-large devices (large desktops, less than 1400px) */
 @media (max-width: 1399.98px) {}
+
+@media (min-width: 992px) and (max-width: 1399.98px) {
+  main .entry-content img {
+    max-width: 700px;
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+  }
+}
