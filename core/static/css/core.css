@@ -225,7 +225,7 @@ table>:not(caption) > * > * {
   main .entry-content .left-25,
   main .entry-content .right-75 { width: 100%; }
   main .entry-content .right-75 { margin-top: 30px; }
-  main .main-homepage .two-columns {
+  main.main-homepage .two-columns {
     display: flex;
     flex-direction: column-reverse;
   }
