@@ -228,8 +228,8 @@ table>:not(caption) > * > * {
     flex-direction: column-reverse;
   }
 
-  .main-homepage .entry-content .left-25,
-  .main-homepage .entry-content .right-75,
+  .main-homepage .entry-content .right-25,
+  .main-homepage .entry-content .left-75,
   main .entry-content .left-25,
   main .entry-content .right-75 { width: 100%; }
   main .entry-content .right-75 { margin-top: 30px; }
