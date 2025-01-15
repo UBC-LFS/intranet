@@ -235,6 +235,10 @@ table>:not(caption) > * > * {
   main .entry-content .right-75 { margin-top: 30px; }
 }
 
+@media (min-width: 992px) and (max-width: 1199.98px) {
+  .main-homepage .entry-content .right-25 { padding-left: 30px; }
+}
+
 @media (min-width: 992px) and (max-width: 1399.98px) {
   main .entry-content img { height: auto; }
   main .entry-content img,
