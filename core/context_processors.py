@@ -1,6 +1,5 @@
 from django.conf import settings
 from wagtail.models import Page
-from django.shortcuts import get_object_or_404
 from django.utils.text import slugify
 
 from core.functions import *
@@ -30,6 +29,10 @@ def site_name_slug(request):
         'site_name_slug': make_slug()
     }
 
+def google_tag_id():
+    return {
+        'google_tag_id': settings.GOOGLE_TAG_ID
+    }
 
 # Helper functions
 
