@@ -29,7 +29,7 @@ def site_name_slug(request):
         'site_name_slug': make_slug()
     }
 
-def google_tag_id():
+def google_tag_id(request):
     return {
         'google_tag_id': settings.GOOGLE_TAG_ID
     }

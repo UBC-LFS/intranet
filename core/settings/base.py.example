@@ -84,7 +84,8 @@ TEMPLATES = [
                 "django.contrib.messages.context_processors.messages",
                 "core.context_processors.navbar_menu",
                 "core.context_processors.current_page",
-                "core.context_processors.site_name_slug"
+                "core.context_processors.site_name_slug",
+                "core.context_processors.google_tag_id"
             ],
         },
     },
@@ -213,3 +214,5 @@ RICH_TEXT_FEATURES = [
 MEMBERS_ROLE_NAME = 'Members'
 
 #WAGTAIL_USER_CREATION_FORM = 'core.forms.CustomUserCreationForm'
+
+GOOGLE_TAG_ID = ''
