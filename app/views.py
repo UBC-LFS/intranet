@@ -73,8 +73,10 @@ class Login(View):
         # Redirect path after login
         redirect_after_login = None
         if request.session.get('redirect_after_login', None):
-            redirect_after_login = request.session.get('redirect_after_login', settings.ADMIN_PORTAL_HOME_PAGE)
+            redirect_after_login = request.session['redirect_after_login']
             del request.session['redirect_after_login']
+        else:
+            redirect_after_login = settings.ADMIN_PORTAL_HOME_PAGE
 
         return HttpResponseRedirect(redirect_after_login)
     
