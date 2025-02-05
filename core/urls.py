@@ -15,10 +15,11 @@ urlpatterns = [
     path('search/', search_views.search, name='search'),
     path('logout/', app_views.Logout.as_view(), name='logout'),
     path('app/', app_views.Login.as_view(), name='login'),
-    # path('lfs-intranet/directory/', blog_views.Directory.as_view(), name='directory'),
+    path('accounts/', include('accounts.urls')),
     path('', app_views.LandingPage.as_view(), name='landing_page')
 
-    #path("documents/", include(wagtaildocs_urls))
+    # path('lfs-intranet/directory/', blog_views.Directory.as_view(), name='directory'),
+    # path("documents/", include(wagtaildocs_urls))
 ]
 
 
@@ -34,11 +35,6 @@ if settings.DEBUG:
         path('django-admin/', admin.site.urls)
     ]
 
-
-if settings.LOCAL_LOGIN:
-    urlpatterns += [
-        path('accounts/', include('accounts.urls'))
-    ]
 
 urlpatterns = urlpatterns + [
     # For anything not caught by a more specific rule above, hand over to
