@@ -70,7 +70,13 @@ class Login(View):
         if not request.user.is_superuser and request.user.groups.count() == 0:
             request.user.groups.add(group)
 
-        return HttpResponseRedirect(settings.ADMIN_PORTAL_HOME_PAGE)
+        # Redirect path after login
+        redirect_after_login = None
+        if request.session.get('redirect_after_login', None):
+            redirect_after_login = request.session.get('redirect_after_login', settings.ADMIN_PORTAL_HOME_PAGE)
+            del request.session['redirect_after_login']
+
+        return HttpResponseRedirect(redirect_after_login)
     
 
 # Helper functions

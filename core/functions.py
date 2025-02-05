@@ -13,6 +13,7 @@ def get_user_groups(request):
 def live_in_menu(obj):
     return obj.live().in_menu()
 
+
 def get_page_restrictions(page):
     types = [ res.restriction_type for res in page.get_view_restrictions() ]
     groups = []
@@ -24,6 +25,7 @@ def get_page_restrictions(page):
 
 
 def add_menu(request, user_groups, menu, page, types, groups):
+    '''
     if (len(types) == 0) or (request.user.is_authenticated and request.user.is_superuser):
         menu.append(page)
     else:
@@ -39,37 +41,8 @@ def add_menu(request, user_groups, menu, page, types, groups):
             menu.append(page)
         elif 'groups' in types and is_group_in == True:
             menu.append(page)
-    
-    return menu
-
-
-def get_page_restrictions(page):
-    types = [ res.restriction_type for res in page.get_view_restrictions() ]
-    groups = []
-    if len(types) > 0:
-        for res in page.get_view_restrictions():
-            for group in res.groups.all():
-                groups.append(group.name)
-    return types, groups
-
-
-def add_menu(request, user_groups, menu, page, types, groups):
-    if (len(types) == 0) or (request.user.is_authenticated and request.user.is_superuser):
-        menu.append(page)
-    else:
-        is_group_in = False
-        for g in groups:
-            if g in user_groups:
-                is_group_in = True
-                break
-
-        if 'login' in types and request.user.is_authenticated:
-            menu.append(page)
-        elif 'password' in types and request.user.is_authenticated and request.user.is_superuser:
-            menu.append(page)
-        elif 'groups' in types and is_group_in == True:
-            menu.append(page)
-    
+    '''
+    menu.append(page)
     return menu
 
 

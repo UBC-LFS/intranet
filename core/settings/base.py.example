@@ -189,6 +189,7 @@ WAGTAILUSERS_PASSWORD_ENABLED = False
 WAGTAILDOCS_SERVE_METHOD = 'direct'
 
 ADMIN_PORTAL_HOME_PAGE = '/admin/'
+WAGTAIL_FRONTEND_LOGIN_URL = '/accounts/login/?next={url}'
 
 PASSWORD_REQUIRED_TEMPLATE = 'home/password_required.html'
 
