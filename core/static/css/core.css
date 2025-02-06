@@ -128,8 +128,7 @@ main .custom-form {
 
 /* Material icons */
 .material-symbols-outlined {
-  font-size: 20px !important;
-  vertical-align: sub;
+  vertical-align: bottom;
 }
 
 

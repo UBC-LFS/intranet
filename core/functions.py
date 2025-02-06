@@ -10,6 +10,7 @@ def get_home():
 def get_user_groups(request):
     return [ group.name for group in request.user.groups.all() ]
 
+
 def live_in_menu(obj):
     return obj.live().in_menu()
 
@@ -42,6 +43,9 @@ def add_menu(request, user_groups, menu, page, types, groups):
         elif 'groups' in types and is_group_in == True:
             menu.append(page)
     '''
+    print(page)
+    print(user_groups, types, groups)
+    print('-------')
     menu.append(page)
     return menu
 

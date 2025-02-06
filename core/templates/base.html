@@ -37,8 +37,8 @@
     {% endblock %}
 
     {% if google_tag_id %}
-      <!-- Google tag (gtag.js) --> 
-      <script async src="https://www.googletagmanager.com/gtag/js?id={{ google_tag_id }}"></script> 
+      <!-- Google tag (gtag.js) -->
+      <script async src="https://www.googletagmanager.com/gtag/js?id={{ google_tag_id }}"></script>
       <script>window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', '{{ google_tag_id }}');</script>
     {% endif %}
   </head>
@@ -58,7 +58,7 @@
               <form class="serach d-flex" action="/search/" method="GET" role="search">
                 <input class="form-control form-control-sm me-2" name="query" type="search" aria-label="Search" placeholder="Enter" />
                 <button class="btn btn-sm btn-outline-light" type="submit">
-                  <span class="material-symbols-outlined">search</span>
+                  <span class="material-symbols-outlined fs-5">search</span>
                 </button>
               </form>
             </div>
@@ -66,7 +66,7 @@
               {% if request.user.is_authenticated and can_access_wagtail_admin %}
                 <div class="text-end page-wrapper">
                   <a class="text-white" href="/admin/">Admin Portal</a>
-                  
+
                   {% if current_page %}
                     <a class="text-white ms-4" href="/admin/pages/{{ current_page.id }}/edit/">Edit Page</a>
                   {% endif %}
@@ -79,7 +79,7 @@
                   Hi, {{ request.user.username }}
                   <a class="btn-logout text-white ms-4" href="{% url 'logout' %}">
                     Log out
-                    <span class="material-symbols-outlined">logout</span>
+                    <span class="material-symbols-outlined fs-5">logout</span>
                   </a>
                 {% endif %}
               </div>
@@ -104,18 +104,33 @@
                       <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         {{ index.title }}
                       </a>
+
                       <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="{% pageurl index %}">{{ index.title }}</a></li>
+                        <li>
+                          <a class="dropdown-item" href="{% pageurl index %}">
+                            {{ index.title }}
+                            {% include 'subpages/_display_types.html' with types=index.types %}
+                          </a>
+                        </li>
 
                         <li><hr class="dropdown-divider"></li>
+
                         {% for page in index.children %}
-                          <li><a class="dropdown-item" href="{% pageurl page %}">{{ page.title }}</a></li>
+                          <li>
+                            <a class="dropdown-item" href="{% pageurl page %}">
+                              {{ page.title }}
+                              {% include 'subpages/_display_types.html' with types=index.types %}
+                            </a>
+                          </li>
                         {% endfor %}
                       </ul>
                     </li>
                   {% else %}
                     <li class="nav-item me-2">
-                      <a class="nav-link" href="{% pageurl index %}">{{ index.title }}</a>
+                      <a class="nav-link" href="{% pageurl index %}">
+                        {{ index.title }}
+                        {% include 'subpages/_display_types.html' with types=index.types %}
+                      </a>
                     </li>
                   {% endif %}
                 {% endfor %}

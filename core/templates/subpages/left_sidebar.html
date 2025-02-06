@@ -8,18 +8,20 @@
 
   {% if sidebar_menu %}
     <h4>Menu</h4>
+
     <ul class="sidebar-menu ps-0" style="list-style-type: none;">
       {% for page in sidebar_menu %}
         <li class="menu-page">
           <a href="{% pageurl page %}">{{ page.title }}</a>
-          {% include 'subpages/_restriction_info.html' with item=page %}
+          {% include 'subpages/_display_types.html' with types=page.types %}
         </li>
+        
         {% if page.children|length > 0 %}
           <ul class="menu-post">
             {% for post in page.children %}
-              <li>
+              <li class="mt-2">
                 <a href="{% pageurl post %}">{{ post.title }}</a>
-                {% include 'subpages/_restriction_info.html' with item=post %}
+                {% include 'subpages/_display_types.html' with types=post.types %}
               </li>
             {% endfor %}
           </ul>

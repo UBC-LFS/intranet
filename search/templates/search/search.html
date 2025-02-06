@@ -71,7 +71,7 @@
           </li>
           <li class="page-item">
             <a class="page-link" href="{% url 'search' %}?query={{ query|urlencode }}{% if method == 'tag' %}&method=tag{% endif %}&page={{ results.previous_page_number }}">
-              <span class="material-symbols-outlined">chevron_left</span>
+              <span class="material-symbols-outlined fs-5">chevron_left</span>
             </a>
           </li>
         {% else %}
@@ -80,7 +80,7 @@
           </li>
           <li class="page-item disabled">
             <span class="page-link">
-              <span class="material-symbols-outlined">chevron_left</span>
+              <span class="material-symbols-outlined fs-5">chevron_left</span>
             </span>
           </li>
         {% endif %}
@@ -102,7 +102,7 @@
         {% if results.has_next %}
           <li class="page-item">
             <a class="page-link" href="{% url 'search' %}?query={{ query|urlencode }}{% if method == 'tag' %}&method=tag{% endif %}&page={{ results.next_page_number }}">
-              <span class="material-symbols-outlined">chevron_right</span>
+              <span class="material-symbols-outlined fs-5">chevron_right</span>
             </a>
           </li>
           <li class="page-item">
@@ -111,7 +111,7 @@
         {% else %}
           <li class="page-item disabled">
             <span class="page-link">
-              <span class="material-symbols-outlined">chevron_right</span>
+              <span class="material-symbols-outlined fs-5">chevron_right</span>
             </span>
           </li>
           <li class="page-item disabled">
