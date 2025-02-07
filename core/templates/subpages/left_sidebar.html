@@ -14,14 +14,16 @@
         <li class="menu-page">
           <a href="{% pageurl page %}">{{ page.title }}</a>
           {% include 'subpages/_display_types.html' with types=page.types %}
+          {% include 'subpages/_restriction_info.html' with item=page %}
         </li>
-        
+
         {% if page.children|length > 0 %}
           <ul class="menu-post">
             {% for post in page.children %}
               <li class="mt-2">
-                <a href="{% pageurl post %}">{{ post.title }}</a>
+                <a class="me-1" href="{% pageurl post %}">{{ post.title }}</a>
                 {% include 'subpages/_display_types.html' with types=post.types %}
+                {% include 'subpages/_restriction_info.html' with item=post %}
               </li>
             {% endfor %}
           </ul>

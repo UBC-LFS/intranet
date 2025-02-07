@@ -43,9 +43,7 @@ def add_menu(request, user_groups, menu, page, types, groups):
         elif 'groups' in types and is_group_in == True:
             menu.append(page)
     '''
-    print(page)
-    print(user_groups, types, groups)
-    print('-------')
+    
     menu.append(page)
     return menu
 

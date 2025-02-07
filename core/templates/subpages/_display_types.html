@@ -1,3 +1,10 @@
-{% if types %}
-  <span class="material-symbols-outlined bg-warning fs-6 p-1 rounded-circle">lock</span>
+{% if not request.user.is_authenticated and types %}
+  <span
+    class="material-symbols-outlined bg-warning fs-6 p-1 rounded-circle"
+    type="button"
+    data-bs-toggle="tooltip"
+    data-bs-placement="top"
+    data-bs-custom-class="primary-tooltip"
+    data-bs-title="This page is private and requires login to view its content."
+  >lock</span>
 {% endif %}

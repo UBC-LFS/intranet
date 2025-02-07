@@ -1,7 +1,8 @@
 {% if request.user.is_authenticated and request.user.is_superuser %}
 
   {% if item.types|length > 0 %}
-    <span class="badge text-bg-light" style="font-size: 11px">
+    <br />
+    <span class="badge text-bg-light" style="font-size: 12px">
       {% if 'login' in item.types %}
         Private, logged-in
       {% elif 'password' in item.types %}

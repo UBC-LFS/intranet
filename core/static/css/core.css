@@ -131,6 +131,31 @@ main .custom-form {
   vertical-align: bottom;
 }
 
+.primary-tooltip {
+  --bs-tooltip-bg: #0d6efd;
+}
+
+.navbar-nav .nav-item .dropdown-item {
+  width: auto;
+  padding-right: 7px;
+}
+
+.main-search-page .search-results > li {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.main-search-page .search-results > li .search-desc,
+.main-search-page .search-results > li .search-tags {
+  margin-bottom: 0;
+}
+
+.main-search-page .search-results > li .break {
+  flex-basis: 100%;
+  height: 0;
+}
+
 
 /* bg-prompt */
 .bg-prompt {

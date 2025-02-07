@@ -41,17 +41,20 @@
 
   <ul class="search-results mt-4">
     {% for result in results %}
-      <li class="mb-3">
-        <a class="fs-5" href="{% pageurl result %}">{{ result }}</a>
+      <li class="mb-3 d-flex align-items-center">
+        <a class="fs-5 me-1" href="{% pageurl result %}">{{ result }}</a>
+        {% include 'subpages/_display_types.html' with types=result.types %}
         <span class="badge text-bg-light">{{ result.badge }}</span>
 
         {% if result.specific.search_description %}
-          <p class="text-secondary">{{ result.specific.search_description|richtext }}</p>
+          <div class="break"></div>
+          <p class="search-desc text-secondary">{{ result.specific.search_description|richtext }}</p>
         {% endif %}
 
         {% if result.tags %}
-          <p>
-            Tags:
+          <div class="break"></div>
+          <p class="search-tags">
+            <small>Tags:</small>
             {% for tag in result.tags %}
               <a href="{{ tag.url }}">{{ tag.name }}</a>{% if not forloop.last %}, {% endif %}
             {% endfor %}

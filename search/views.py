@@ -89,6 +89,9 @@ def search(request):
             item.tags = get_tags(item.specific.blogpage.get_tags)
         elif model == 'blogpost':
             item.tags = get_tags(item.specific.blogpost.get_tags)
+        
+        types, groups = get_page_restrictions(item)
+        item.types = types
 
     return TemplateResponse(request, 'search/search.html', {
         'home_page': get_home(),

@@ -9,6 +9,9 @@ from django.views.decorators.http import require_GET
 from django.views.decorators.cache import never_cache
 
 
+
+# Directory
+
 BASE_URL = os.path.dirname(os.path.abspath(__file__))
 DATA_FILE = os.path.join(BASE_URL, 'data', 'users.json')
 

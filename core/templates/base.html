@@ -101,36 +101,28 @@
                 {% for index in navbar_menu %}
                   {% if index.children|length > 0 %}
                     <li class="nav-item dropdown me-2">
-                      <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        {{ index.title }}
-                      </a>
+                      <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">{{ index.title }}</a>
 
                       <ul class="dropdown-menu">
-                        <li>
-                          <a class="dropdown-item" href="{% pageurl index %}">
-                            {{ index.title }}
-                            {% include 'subpages/_display_types.html' with types=index.types %}
-                          </a>
+                        <li class="d-flex align-items-center">
+                          <a class="dropdown-item" href="{% pageurl index %}">{{ index.title }}</a>
+                          {% include 'subpages/_display_types.html' with types=index.types %}
                         </li>
 
                         <li><hr class="dropdown-divider"></li>
 
                         {% for page in index.children %}
-                          <li>
-                            <a class="dropdown-item" href="{% pageurl page %}">
-                              {{ page.title }}
-                              {% include 'subpages/_display_types.html' with types=index.types %}
-                            </a>
+                          <li class="d-flex align-items-center">
+                            <a class="dropdown-item" href="{% pageurl page %}">{{ page.title }}</a>
+                            {% include 'subpages/_display_types.html' with types=index.types %}
                           </li>
                         {% endfor %}
                       </ul>
                     </li>
                   {% else %}
-                    <li class="nav-item me-2">
-                      <a class="nav-link" href="{% pageurl index %}">
-                        {{ index.title }}
-                        {% include 'subpages/_display_types.html' with types=index.types %}
-                      </a>
+                    <li class="nav-item me-2 d-flex align-items-center">
+                      <a class="nav-link" href="{% pageurl index %}">{{ index.title }}</a>
+                      {% include 'subpages/_display_types.html' with types=index.types %}
                     </li>
                   {% endif %}
                 {% endfor %}

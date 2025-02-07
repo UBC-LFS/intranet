@@ -14,7 +14,6 @@ def convert_phone_format(s):
 
 @register.filter
 def minus(a, b):
-    print(a, b, a-b)
     return a - b
 
 
@@ -22,5 +21,4 @@ def minus(a, b):
 
 @register.filter
 def inspect(data):
-    print( dir(data) )
     return None

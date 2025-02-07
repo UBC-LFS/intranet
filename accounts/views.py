@@ -9,8 +9,7 @@ from .forms import LocalLoginForm
 
 
 def login(request):
-    if not request.session.get('redirect_after_login', None):
-        request.session['redirect_after_login'] = request.GET.get('next', '/')
+    request.session['redirect_after_login'] = request.GET.get('next', '/')
     return HttpResponseRedirect('/app/')
 
 
