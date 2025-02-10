@@ -1,4 +1,5 @@
 from django import template
+from django.utils.text import slugify
 
 register = template.Library()
 
@@ -15,6 +16,11 @@ def convert_phone_format(s):
 @register.filter
 def minus(a, b):
     return a - b
+
+
+@register.filter
+def slug(s):
+    return slugify(s)
 
 
 # Helper functions

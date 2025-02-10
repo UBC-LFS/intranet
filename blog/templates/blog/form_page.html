@@ -1,15 +1,25 @@
+{% extends "base.html" %}
 {% load wagtailcore_tags %}
-<html>
-    <head>
-        <title>{{ page.title }}</title>
-    </head>
-    <body>
-        <h1>{{ page.title }}</h1>
-        {{ page.intro|richtext }}
-        <form action="{% pageurl page %}" method="POST">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <input type="submit">
-        </form>
-    </body>
-</html>
+{% load template_utils %}
+
+{% block title %}{{ page.title }}{% endblock %}
+
+{% block body_class %}body-{{ page.title|slug }}{% endblock %}
+{% block main_class %}main-{{ page.title|slug }}{% endblock %}
+{% block content_class %}content-{{ page.title|slug }} index{% endblock %}
+
+{% block content %}
+
+<section>
+  <h1>{{ page.title }}</h1>
+
+  <p>{{ page.intro|richtext }}</p>
+
+  <form action="{% pageurl page %}" method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" />
+  </form>
+</section>
+
+{% endblock %}
