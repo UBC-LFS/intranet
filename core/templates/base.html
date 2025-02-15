@@ -113,8 +113,8 @@
 
                         {% for page in index.children %}
                           <li class="d-flex align-items-center">
-                            <a class="dropdown-item" href="{% pageurl page %}">{{ page.title }}</a>
-                            {% include 'subpages/_display_types.html' with types=index.types %}
+                            <a class="dropdown-item" href="{% pageurl page %}" {% if not request.user.is_authenticated and page.types %}style="padding-right:7px;"{% endif %}>{{ page.title }}</a>
+                            {% include 'subpages/_display_types.html' with types=page.types %}
                           </li>
                         {% endfor %}
                       </ul>

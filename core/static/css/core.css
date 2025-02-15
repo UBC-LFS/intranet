@@ -142,7 +142,6 @@ main .custom-form {
 
 .navbar-nav .nav-item .dropdown-item {
   width: auto;
-  padding-right: 7px;
 }
 
 .main-search-page .search-results > li {
@@ -206,6 +205,12 @@ table>:not(caption) > * > * {
   padding: .5rem .5rem;
 }
 
+.table-borderless,
+.table-borderless th,
+.table-borderless td {
+  border: none;
+}
+
 
 /* sm applies to x-small devices (portrait phones, less than 576px) */
 @media (max-width: 575.98px) {
@@ -219,7 +224,7 @@ table>:not(caption) > * > * {
   main .entry-content img { height: auto; }
   main .entry-content img,
   main .entry-content iframe {
-    max-width: 380px;
+    max-width: 350px;
     margin-left: auto;
     margin-right: auto;
     display: block;

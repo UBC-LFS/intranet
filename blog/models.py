@@ -2,46 +2,26 @@ from django.conf import settings
 from django.db import models
 from wagtail import blocks
 from wagtail.models import Page
-from wagtail.fields import StreamField
-from wagtail.admin.panels import FieldPanel
+from wagtail.fields import StreamField, RichTextField
+from wagtail.admin.panels import FieldPanel, InlinePanel, MultiFieldPanel
 from wagtail.search import index
 from wagtail.images.blocks import ImageChooserBlock
 from modelcluster.fields import ParentalKey
 from modelcluster.contrib.taggit import ClusterTaggableManager
 from taggit.models import TaggedItemBase
 from wagtail.contrib.routable_page.models import RoutablePageMixin
+from wagtail.contrib.forms.models import AbstractEmailForm, AbstractFormField
+from wagtail.contrib.forms.panels import FormSubmissionsPanel
+
+from django.core.mail import send_mail
+import smtplib
+from email.mime.text import MIMEText
+
+from datetime import date
+from slugify import slugify
 
 from .blocks import AccordionBlock, ColumnsBlock, CustomTableBlock
 from core.functions import *
-
-
-from django.db import models
-from modelcluster.fields import ParentalKey
-from wagtail.admin.panels import FieldPanel, FieldRowPanel, InlinePanel, MultiFieldPanel
-from wagtail.fields import RichTextField
-from wagtail.contrib.forms.models import AbstractEmailForm, AbstractFormField
-
-
-class FormField(AbstractFormField):
-    page = ParentalKey('FormPage', on_delete=models.CASCADE, related_name='form_fields')
-
-
-class FormPage(AbstractEmailForm):
-    intro = RichTextField(blank=True)
-    thank_you_text = RichTextField(blank=True)
-
-    content_panels = AbstractEmailForm.content_panels + [
-        FieldPanel('intro'),
-        InlinePanel('form_fields', label="Form fields"),
-        FieldPanel('thank_you_text'),
-        MultiFieldPanel([
-            FieldRowPanel([
-                FieldPanel('from_address', classname="col6"),
-                FieldPanel('to_address', classname="col6"),
-            ]),
-            FieldPanel('subject'),
-        ], "Email"),
-    ]
 
 
 class BlogPageTag(TaggedItemBase):
@@ -89,7 +69,7 @@ class BlogPost(Page):
     def get_tags(self):
         tags = self.tags.all()
         for tag in tags:
-            tag.url = f"/search/?query={tag.slug}&method=tag&page=1"
+            tag.url = f'/search/?query={tag.slug}&method=tag&page=1'
         return tags
 
 
@@ -117,7 +97,7 @@ class BlogPage(Page):
     ]
 
     parent_page_types = ['blog.BlogIndex']
-    subpage_types = ['blog.BlogPost']
+    subpage_types = ['blog.BlogPost', 'blog.FormPost']
 
     def get_context(self, request):
         context = super(BlogPage, self).get_context(request)
@@ -153,10 +133,109 @@ class BlogIndex(RoutablePageMixin, Page):
         FieldPanel('body')
     ]
 
-    subpage_types = ['blog.BlogPage']
+    subpage_types = ['blog.BlogPage', 'blog.FormPage']
 
     def get_context(self, request):
         context = super(BlogIndex, self).get_context(request)
         context['model_name'] = self._meta.model_name
         context['sidebar_menu'] = make_sidebar_menu(request, get_user_groups(request), self)
+        return context
+    
+
+# Form
+
+class FormField(AbstractFormField):
+    page = ParentalKey('FormIndex', on_delete=models.CASCADE, related_name='form_fields')
+
+
+class FormIndex(AbstractEmailForm):
+    publish_date = models.DateField('Publish Date', blank=True, null=True)
+    intro = RichTextField(blank=True)
+    thank_you_text = RichTextField(verbose_name="Thank You Text", blank=True)
+    from_address = models.CharField(max_length=255, verbose_name="Sender Email Address", blank=True)
+    to_address = models.CharField(max_length=255, verbose_name="Recipient Email Address", help_text="Separate multiple email addresses with commas.", blank=True)
+    subject = models.CharField(max_length=255, verbose_name="Email Subject", blank=True)
+
+    content_panels = AbstractEmailForm.content_panels + [
+        FormSubmissionsPanel(),
+        FieldPanel('publish_date'),
+        FieldPanel('intro'),
+        InlinePanel('form_fields', label="Form Fields"),
+        FieldPanel('thank_you_text'),
+        MultiFieldPanel([
+            FieldPanel('from_address'),
+            FieldPanel('to_address'),
+            FieldPanel('subject'),
+        ], "Admin - Email Notification (Optional)"),
+    ]
+
+    def get_context(self, request):
+        context = super(FormIndex, self).get_context(request)
+        context['model_name'] = self._meta.model_name
+        context['sidebar_menu'] = make_sidebar_menu(request, get_user_groups(request), self)
+        return context
+
+
+    def send_mail(self, form):
+        if self.from_address and self.to_address and self.subject:
+            sender = self.from_address
+            fields = ''
+            for field in self.render_email(form).split('\n'):            
+                if field:
+                    field = field.replace('\r', '')
+                    key = slugify(field.split(':')[0]).replace('-', '_')
+                    if key in list(form.fields.keys()):
+                        fields += '<li>' + field + '</li>'
+                    else:
+                        fields = fields[:-5] + ' ' + field + '</li>'
+            
+            for receiver in self.to_address.split(','):
+                message = '''\
+                <div>
+                    <p>Dear {0},</p>
+                    <p>A new form has been submitted. Please review the details and process the request accordingly.
+                    <h5>Form Details</h5>
+                    <ul>{1}</ul>
+                    <br />
+                    <p>Best regards,</p>
+                    <p>LFS Intranet</p>
+                </div>
+                '''.format(receiver.strip(), fields)
+
+                msg = MIMEText(message, 'html')
+                msg['Subject'] = '{0} - {1}'.format(self.subject, date.today().strftime('%x'))
+                msg['From'] = sender
+                msg['To'] = receiver.strip()
+
+                try:
+                    server = smtplib.SMTP(settings.EMAIL_HOST)
+                    server.sendmail(sender, receiver, msg.as_string())
+                    print(f'An email has been sent to {receiver.strip()}')
+                except Exception as e:
+                    print('Send Email Error:', e)
+                finally:
+                    server.quit()
+
+
+class FormPage(FormIndex):
+    template = "blog/form_page.html"
+    parent_page_types = ['blog.BlogIndex']
+    subpage_types = []
+
+    def get_context(self, request):
+        context = super(FormPage, self).get_context(request)
+        context['model_name'] = self._meta.model_name
+        context['sidebar_menu'] = make_sidebar_menu(request, get_user_groups(request), self.get_parent())
+        return context
+
+
+class FormPost(FormIndex):
+    template = "blog/form_post.html"
+    parent_page_types = ['blog.BlogPage']
+    subpage_types = []
+
+    def get_context(self, request):
+        context = super(FormPost, self).get_context(request)
+        context['model_name'] = self._meta.model_name
+        context['sidebar_menu'] = make_sidebar_menu(request, get_user_groups(request), self.get_parent().get_parent())
         return context

@@ -19,8 +19,21 @@ def minus(a, b):
 
 
 @register.filter
-def slug(s):
-    return slugify(s)
+def add_attrs(field, args):
+    attrs = {}
+    for a in args.split(','):
+        k, v = a.split(':')
+        attrs[k] = v
+    return field.as_widget(attrs=attrs)
+
+
+@register.filter
+def get_field_type(field):
+    if hasattr(field.field.widget, 'input_type'):
+        return field.field.__class__.__name__ + '_' + field.field.widget.input_type
+    return field.field.__class__.__name__
+    
+    
 
 
 # Helper functions

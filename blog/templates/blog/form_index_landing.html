@@ -5,13 +5,13 @@
 
 {% block body_class %}body-{{ model_name }}{% endblock %}
 {% block main_class %}main-{{ model_name }}{% endblock %}
-{% block content_class %}content-{{ model_name }} page{% endblock %}
+{% block content_class %}content-{{ model_name }} index{% endblock %}
 
 {% block content %}
 
 <div class="two-columns">
   <div class="column left-25">
-    {% include 'subpages/left_sidebar.html' with title=page.get_parent.title slug=page.get_parent.slug %}
+    {% include 'subpages/left_sidebar.html' with title=page.title slug=page.slug %}
   </div>
   <div class="column right-75">
     <h2>{{ page.title }} - Confirmation</h2>
