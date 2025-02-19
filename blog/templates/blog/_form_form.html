@@ -6,42 +6,56 @@
 
   <table class="table table-borderless">
     {% for field in form %}
-      <tr>
-        <td class="col-md-4">
-          <label class="form-label fw-semibold" for="{{ field.id_for_label }}">
-            {{ field.label }}
-            {% if field.field.required %} <span class="text-danger">*</span> {% endif %}
-          </label>
+      {% if field.name != "captcha" %}
+        <tr>
+          <td class="col-md-4">
+            <label class="form-label fw-semibold" for="{{ field.id_for_label }}">
+              {{ field.label }}
+              {% if field.field.required %} <span class="text-danger">*</span> {% endif %}
+            </label>
 
-          {% if field.help_text %}
-            <div class="form-text">{{ field.help_text|safe }}</div>
-          {% endif %}
-        </td>
+            {% if field.help_text %}
+              <div class="form-text">{{ field.help_text|safe }}</div>
+            {% endif %}
+          </td>
 
-        <td class="col-md-8">
-          {% if field|get_field_type == 'BooleanField_checkbox' or field|get_field_type == 'MultipleChoiceField_checkbox' or field|get_field_type == 'ChoiceField_radio' %}
-            {{ field }}
+          <td class="col-md-8">
+            {% if field|get_field_type == 'BooleanField_checkbox' or field|get_field_type == 'MultipleChoiceField_checkbox' or field|get_field_type == 'ChoiceField_radio' %}
+              {{ field }}
 
-          {% elif field|get_field_type == 'ChoiceField_select' %}
-            {{ field|add_attrs:"class:form-select" }}
+            {% elif field|get_field_type == 'ChoiceField_select' %}
+              {{ field|add_attrs:"class:form-select" }}
 
-          {% elif field|get_field_type == 'DateField_text' %}
-            <input type="date" name="date" value="" class="form-control" {% if field.field.required %}required{% endif %} id="{{ field.id_for_label }}" />
+            {% elif field|get_field_type == 'DateField_text' %}
+              <input type="date" name="date" value="" class="form-control" {% if field.field.required %}required{% endif %} id="{{ field.id_for_label }}" />
 
-          {% elif field|get_field_type == 'DateTimeField_text' %}
-            <input type="datetime-local" name="date_and_time" class="form-control" {% if field.field.required %}required{% endif %} id="{{ field.id_for_label }}" />
+            {% elif field|get_field_type == 'DateTimeField_text' %}
+              <input type="datetime-local" name="date_and_time" class="form-control" {% if field.field.required %}required{% endif %} id="{{ field.id_for_label }}" />
 
-          {% else %}
-            {{ field|add_attrs:"class:form-control" }}
-          {% endif %}
+            {% else %}
+              {{ field|add_attrs:"class:form-control" }}
+            {% endif %}
 
-          {% for error in field.errors %}
-            <div class="text-danger">{{ error }}</div>
-          {% endfor %}
-        </td>
-      </tr>
+            {% for error in field.errors %}
+              <div class="text-danger">{{ error }}</div>
+            {% endfor %}
+          </td>
+        </tr>
+      {% endif %}
     {% endfor %}
   </table>
+
+  <div class="mb-3">
+    {{ form.captcha }}
+    {% if form.captcha.errors %}
+      <div class="text-danger">
+        {% for error in form.captcha.errors %}
+          {{ error }}
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+
   <div class="text-center">
     <input class="btn btn-primary btn-lg mt-3" type="submit" />
   </div>

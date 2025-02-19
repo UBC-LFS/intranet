@@ -47,7 +47,8 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "scheduler.apps.SchedulerConfig"
+    "scheduler.apps.SchedulerConfig",
+    "django_recaptcha"
 ]
 
 MIDDLEWARE = [
@@ -217,3 +218,18 @@ MEMBERS_ROLE_NAME = 'Members'
 #WAGTAIL_USER_CREATION_FORM = 'core.forms.CustomUserCreationForm'
 
 GOOGLE_TAG_ID = ''
+
+
+
+# Form
+
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
+EMAIL_HOST = os.environ['INTRANET_EMAIL_HOST'] #'smtp.mail-relay.ubc.ca'
+EMAIL_HOST_USER = ''
+EMAIL_HOST_PASSWORD = ''
+EMAIL_FROM = os.environ['INTRANET_EMAIL_FROM']
+
+# Django recaptcha
+RECAPTCHA_PUBLIC_KEY = os.environ['INTRANET_RECAPTCHA_PUBLIC_KEY']
+RECAPTCHA_PRIVATE_KEY = os.environ['INTRANET_RECAPTCHA_PRIVATE_KEY']

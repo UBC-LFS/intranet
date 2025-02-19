@@ -3,7 +3,7 @@ from django.db import models
 from wagtail import blocks
 from wagtail.models import Page
 from wagtail.fields import StreamField, RichTextField
-from wagtail.admin.panels import FieldPanel, InlinePanel, MultiFieldPanel
+from wagtail.admin.panels import FieldPanel, InlinePanel, MultiFieldPanel, HelpPanel
 from wagtail.search import index
 from wagtail.images.blocks import ImageChooserBlock
 from modelcluster.fields import ParentalKey
@@ -144,6 +144,11 @@ class BlogIndex(RoutablePageMixin, Page):
 
 # Form
 
+
+from django_recaptcha.fields import ReCaptchaField
+from django_recaptcha.widgets import ReCaptchaV2Checkbox
+
+
 class FormField(AbstractFormField):
     page = ParentalKey('FormIndex', on_delete=models.CASCADE, related_name='form_fields')
 
@@ -163,11 +168,18 @@ class FormIndex(AbstractEmailForm):
         InlinePanel('form_fields', label="Form Fields"),
         FieldPanel('thank_you_text'),
         MultiFieldPanel([
+            HelpPanel(content="Note: <br /> 1. Please use 'Email' if you would like to add an email address to a form, and it will be used as the sender email address. <br /> 2. If the sender email address is empty, no-reply@landfood.ubc.ca will be used as the default email address."),
             FieldPanel('from_address'),
             FieldPanel('to_address'),
             FieldPanel('subject'),
         ], "Admin - Email Notification (Optional)"),
     ]
+
+    def get_form_class(self):
+        form_class = super().get_form_class()
+        class CustomForm(form_class):
+            captcha = ReCaptchaField(widget=ReCaptchaV2Checkbox())
+        return CustomForm
 
     def get_context(self, request):
         context = super(FormIndex, self).get_context(request)
@@ -175,10 +187,18 @@ class FormIndex(AbstractEmailForm):
         context['sidebar_menu'] = make_sidebar_menu(request, get_user_groups(request), self)
         return context
 
-
     def send_mail(self, form):
-        if self.from_address and self.to_address and self.subject:
+        sender = None
+        user_address = form.cleaned_data.get('email', None)
+        
+        if user_address:
+            sender = user_address
+        elif self.from_address:
             sender = self.from_address
+        else:
+            sender = settings.EMAIL_FROM
+
+        if sender and self.to_address and self.subject:
             fields = ''
             for field in self.render_email(form).split('\n'):            
                 if field:
@@ -210,7 +230,7 @@ class FormIndex(AbstractEmailForm):
                 try:
                     server = smtplib.SMTP(settings.EMAIL_HOST)
                     server.sendmail(sender, receiver, msg.as_string())
-                    print(f'An email has been sent to {receiver.strip()}')
+                    print(f'The sender, {sender}: an email has been sent to {receiver.strip()}')
                 except Exception as e:
                     print('Send Email Error:', e)
                 finally:
