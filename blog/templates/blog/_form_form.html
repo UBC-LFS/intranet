@@ -1,7 +1,7 @@
 {% load wagtailcore_tags %}
 {% load template_utils %}
 
-<form action="{% pageurl page %}" method="POST">
+<form action="{% pageurl page %}" method="POST" novalidate>
   {% csrf_token %}
 
   <table class="table table-borderless">
