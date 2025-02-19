@@ -198,18 +198,17 @@ class FormIndex(AbstractEmailForm):
         else:
             sender = settings.EMAIL_FROM
 
-        keys = list(form.fields.keys())
-        keys.remove('captcha')
         if sender and self.to_address and self.subject:
             fields = ''
             for field in self.render_email(form).split('\n'):            
                 if field:
                     field = field.replace('\r', '')
                     key = slugify(field.split(':')[0]).replace('-', '_')
-                    if key in keys:
-                        fields += '<li>' + field + '</li>'
-                    else:
-                        fields = fields[:-5] + ' ' + field + '</li>'
+                    if key != 'captcha':
+                        if key in list(form.fields.keys()):
+                            fields += '<li>' + field + '</li>'
+                        else:
+                            fields = fields[:-5] + ' ' + field + '</li>'
             
             for receiver in self.to_address.split(','):
                 message = '''\
