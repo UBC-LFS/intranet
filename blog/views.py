@@ -22,7 +22,7 @@ class Directory(View):
                 with open(users_json, 'r', encoding='utf-8') as f:
                     users = json.loads(f.read())
         else:
-            return HttpResponseRedirect('/app/')
+            return HttpResponseRedirect('/accounts/login/?next=/lfs-intranet/directory/')
         
         return render(request, 'blog/directory.html', {
             'users': sorted(users, key=lambda u: u[ settings.SHIB_ATTR_MAP['last_name'] ])

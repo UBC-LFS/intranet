@@ -35,15 +35,18 @@ def get_field_type(field):
     
 
 @register.filter
-def join(l, opr):
-    if isinstance(l, list):
+def join(item, opr):
+    if isinstance(item, list):
         if opr == 'email':
             emails = []
-            for a in l:
-                emails.append(f'<a href="mailto={a}">{a}</a>')
+            for i in item:
+                emails.append(f'<a href="mailto:{i}">{i}</a>')
             return '<br /> '.join(emails)
-        return f'{opr} '.join(l)
-    return l
+        return f'{opr} '.join(item)
+    else:
+        if opr == 'email':
+            return f'<a href="mailto:{item}">{item}</a>'
+    return item
 
 
 
