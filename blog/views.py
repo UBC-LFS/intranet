@@ -1,19 +1,13 @@
 import os
 import json
-import requests
 from django.conf import settings
 from django.shortcuts import render
 from django.views import View
+from django.http import HttpResponseRedirect
 from django.utils.decorators import method_decorator
 from django.views.decorators.http import require_GET
 from django.views.decorators.cache import never_cache
 
-
-
-# Directory
-
-BASE_URL = os.path.dirname(os.path.abspath(__file__))
-DATA_FILE = os.path.join(BASE_URL, 'data', 'users.json')
 
 @method_decorator([never_cache], name='dispatch')
 class Directory(View):
@@ -21,39 +15,15 @@ class Directory(View):
     @method_decorator(require_GET)
     def get(self, request, *args, **kwargs):
         users = []
-        if os.path.isfile(DATA_FILE):
-            with open(DATA_FILE, 'r', encoding='utf-8') as f:
-                users = json.loads(f.read())
-        else:
-            users = get_data()
-            
-        return render(request, 'blog/directory.html', {
-            'users': users
-        })
 
-
-def get_data():
-    users = []
-    has_next_page = True
-    page = 1
-    while has_next_page:
-        res = requests.get(
-            settings.INTRANET_DIRECTORY_API_URL + '&page=' + str(page),
-            headers = {
-                'x-client-id': settings.INTRANET_DIRECTORY_API_CLIENT_ID, 
-                'x-client-secret': settings.INTRANET_DIRECTORY_API_CLIENT_SECRET
-            }
-        )
-        if res.status_code == 200:
-            users.extend(res.json()['pageItems'])
-            has_next_page = res.json()['hasNextPage']
-            page += 1
+        if not settings.DIRECTORY_PRIVATE or (settings.DIRECTORY_PRIVATE and request.user.is_authenticated):
+            users_json = os.path.join(settings.DIRECTORY_PATH, 'users.json')
+            if os.path.isdir(settings.DIRECTORY_PATH) and os.path.isfile(users_json):
+                with open(users_json, 'r', encoding='utf-8') as f:
+                    users = json.loads(f.read())
         else:
-            print('Failed to get data via API for some reason.')
-            break
-    
-    if len(users) > 0:
-        with open(DATA_FILE, 'w', encoding='utf-8') as f:
-            json.dump(users, f)
+            return HttpResponseRedirect('/app/')
         
-    return users
+        return render(request, 'blog/directory.html', {
+            'users': sorted(users, key=lambda u: u[ settings.SHIB_ATTR_MAP['last_name'] ])
+        })

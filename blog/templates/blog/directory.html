@@ -1,47 +1,56 @@
 {% extends "base.html" %}
 {% load wagtailcore_tags %}
+{% load template_utils %}
 
 {% block title %}Directory{% endblock %}
 
-{% block body_class %}body-blogindex{% endblock %}
-{% block main_class %}main-blogindex{% endblock %}
-{% block content_class %}content-blogindex page{% endblock %}
+{% block body_class %}body-directory{% endblock %}
+{% block main_class %}main-directory{% endblock %}
+{% block content_class %}content-directory page{% endblock %}
 
 {% block content %}
 
-{% load template_utils %}
+<div class="two-columns">
+  <div class="column left-25">
+    {% include 'subpages/left_sidebar.html' with title='Directory' slug='directory' %}
+  </div>
+  <div class="column right-75">
+    <h2 class="page-title">Directory</h2>
 
-<div>
-  <h2 class="page-title">Directory</h2>
-  <div class="page-content mt-5">
+    <h6 class="text-secondary">Total Users: {{ users|length }}</h6>
 
-    <table id="directory-table" class="table table-bordered table-striped table-hover">
-      <thead>
+    <table
+      class="table table-bordered table-striped table-hover fs-8"
+      data-toggle="table"
+      data-sortable="true"
+      data-classes=""
+      data-pagination="true"
+      data-search="true"
+      data-page-size="25"
+      data-page-list="[25, 50, 100, 200, all]"
+    >
+    <thead>
+      <tr>
+        <th data-sortable="true">Last Name</th>
+        <th data-sortable="true">First Name</th>
+        <th data-sortable="true">Title</th>
+        <th data-sortable="true">Email</th>
+        <th data-sortable="true">Office</th>
+        <th data-sortable="true">Phone</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for user in users %}
         <tr>
-          <th class="text-center">Last Name</th>
-          <th class="text-center">First Name</th>
-          <th class="text-center">Title</th>
-          <th class="text-center">Email</th>
-          <th class="text-center">Office</th>
-          <th class="text-center">Phone</th>
+          <td>{{ user.sn }}</td>
+          <td>{{ user.givenName }}</td>
+          <td>{{ user.title|join:", " }}</td>
+          <td>{{ user.mail|join:"email"|safe }}</td>
+          <td>{{ user.l|join:"<br />"|safe }}</td>
+          <td>{{ user.telephoneNumber|join:"<br />"|safe }}</td>
         </tr>
-      </thead>
-      <tbody>
-        {% for user in users %}
-          <tr>
-            <td>{{ user.worker.personNames.0.familyName }}</td>
-            <td>{{ user.worker.personNames.0.givenName }}</td>
-            <td></td>
-            <td>
-              {% for email in user.worker.communicationChannel.emails %}
-                <a href="mailto:{{ email.emailAddress }}">{{ email.emailAddress }}</a> <br />
-              {% endfor %}
-            </td>
-            <td>{{ user.worker.addresses.0.line_1 }}, {{ user.worker.addresses.0.postalCode }}</td>
-            <td class="text-start">{{ user.worker.communicationChannel.telephoneNumbers.0.telephoneNumber|convert_phone_format }}</td>
-          </tr>
-        {% endfor %}
-      </tbody>
+      {% endfor %}
+    </tbody>
     </table>
   </div>
 </div>
@@ -50,11 +59,7 @@
 
 
 {% block extra_js %}
-
 <script type="text/javascript">
-  new DataTable('#directory-table', {
-    'pageLength': 25
-  });
-</script>
 
+</script>
 {% endblock %}

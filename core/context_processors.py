@@ -34,6 +34,11 @@ def google_tag_id(request):
         'google_tag_id': settings.GOOGLE_TAG_ID
     }
 
+def directory_private(request):
+    return {
+        'directory_private': settings.DIRECTORY_PRIVATE
+    }
+
 # Helper functions
 
 def make_slug():

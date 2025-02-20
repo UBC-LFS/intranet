@@ -3,9 +3,9 @@
 
 {% block title %}{{ page.title }}{% endblock %}
 
-{% block body_class %}body-{{ model_name }}{% endblock %}
-{% block main_class %}main-{{ model_name }}{% endblock %}
-{% block content_class %}content-{{ model_name }} page{% endblock %}
+{% block body_class %}body-{{ page.slug }}{% endblock %}
+{% block main_class %}main-{{ page.slug }}{% endblock %}
+{% block content_class %}content-{{ page.slug }} page{% endblock %}
 
 {% block content %}
 

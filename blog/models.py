@@ -217,7 +217,6 @@ class FormIndex(AbstractEmailForm):
                     <p>A new form has been submitted. Please review the details and process the request accordingly.
                     <h5>Form Details</h5>
                     <ul>{1}</ul>
-                    <br />
                     <p>Best regards,</p>
                     <p>LFS Intranet</p>
                 </div>

@@ -33,7 +33,18 @@ def get_field_type(field):
         return field.field.__class__.__name__ + '_' + field.field.widget.input_type
     return field.field.__class__.__name__
     
-    
+
+@register.filter
+def join(l, opr):
+    if isinstance(l, list):
+        if opr == 'email':
+            emails = []
+            for a in l:
+                emails.append(f'<a href="mailto={a}">{a}</a>')
+            return '<br /> '.join(emails)
+        return f'{opr} '.join(l)
+    return l
+
 
 
 # Helper functions
