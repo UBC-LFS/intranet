@@ -86,7 +86,8 @@ TEMPLATES = [
                 "core.context_processors.navbar_menu",
                 "core.context_processors.current_page",
                 "core.context_processors.site_name_slug",
-                "core.context_processors.google_tag_id"
+                "core.context_processors.google_tag_id",
+                "core.context_processors.directory_private"
             ],
         },
     },
@@ -233,3 +234,7 @@ EMAIL_FROM = os.environ['INTRANET_EMAIL_FROM']
 # Django recaptcha
 RECAPTCHA_PUBLIC_KEY = os.environ['INTRANET_RECAPTCHA_PUBLIC_KEY']
 RECAPTCHA_PRIVATE_KEY = os.environ['INTRANET_RECAPTCHA_PRIVATE_KEY']
+
+
+DIRECTORY_PRIVATE = True
+DIRECTORY_PATH = os.path.join('/')
