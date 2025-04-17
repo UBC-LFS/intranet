@@ -6,5 +6,8 @@
     data-bs-placement="top"
     data-bs-custom-class="primary-tooltip"
     data-bs-title="This page is private and requires login to view its content."
+    {% if mr %}
+      style="margin-right:{{mr}}"
+    {% endif %}
   >lock</span>
 {% endif %}

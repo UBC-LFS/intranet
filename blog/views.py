@@ -25,5 +25,5 @@ class Directory(View):
             return HttpResponseRedirect('/accounts/login/?next=/lfs-intranet/directory/')
         
         return render(request, 'blog/directory.html', {
-            'users': sorted(users, key=lambda u: u[ settings.SHIB_ATTR_MAP['last_name'] ])
+            'users': sorted(users, key=lambda u: u[settings.SHIB_ATTR_MAP['last_name']].lower())
         })
