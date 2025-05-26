@@ -168,7 +168,7 @@ class FormIndex(AbstractEmailForm):
         InlinePanel('form_fields', label="Form Fields"),
         FieldPanel('thank_you_text'),
         MultiFieldPanel([
-            HelpPanel(content="Note: <br /> 1. Please use 'Email' if you would like to add an email address to a form, and it will be used as the sender email address. <br /> 2. If the sender email address is empty, no-reply@landfood.ubc.ca will be used as the default email address."),
+            HelpPanel(content="Note: <br /> 1. This email notification for Admin will function as long as a sender, a recipient, and an email subject are provided. <br /> 2. Please use 'Email' if you would like to add an email address to a form, and it will be used as the sender email address. <br /> 3. If the sender email address is empty, no-reply@landfood.ubc.ca will be used as the default email address. <br /> 4.  Use 'Email Subject' to specify the subject for a form. It will be applied as the sender's email subject."),
             FieldPanel('from_address'),
             FieldPanel('to_address'),
             FieldPanel('subject'),
@@ -189,7 +189,10 @@ class FormIndex(AbstractEmailForm):
 
     def send_mail(self, form):
         sender = None
+        subject = self.subject
+
         user_address = form.cleaned_data.get('email', None)
+        user_email_subject = form.cleaned_data.get('email_subject', None)
         
         if user_address:
             sender = user_address
@@ -198,7 +201,10 @@ class FormIndex(AbstractEmailForm):
         else:
             sender = settings.EMAIL_FROM
 
-        if sender and self.to_address and self.subject:
+        if user_email_subject:
+            subject = user_email_subject
+
+        if sender and self.to_address and subject:
             fields = ''
             for field in self.render_email(form).split('\n'):            
                 if field:
@@ -214,7 +220,7 @@ class FormIndex(AbstractEmailForm):
                 message = '''\
                 <div>
                     <p>Dear {0},</p>
-                    <p>A new form has been submitted. Please review the details and process the request accordingly.
+                    <p>A new form has been submitted. Please review the details and process the request accordingly.</p>
                     <h5>Form Details</h5>
                     <ul>{1}</ul>
                     <p>Best regards,</p>
@@ -223,7 +229,7 @@ class FormIndex(AbstractEmailForm):
                 '''.format(receiver.strip(), fields)
 
                 msg = MIMEText(message, 'html')
-                msg['Subject'] = '{0} - {1}'.format(self.subject, date.today().strftime('%x'))
+                msg['Subject'] = '{0} - {1}'.format(subject, date.today().strftime('%x'))
                 msg['From'] = sender
                 msg['To'] = receiver.strip()
 
