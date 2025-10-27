@@ -168,7 +168,7 @@ class FormIndex(AbstractEmailForm):
         InlinePanel('form_fields', label="Form Fields"),
         FieldPanel('thank_you_text'),
         MultiFieldPanel([
-            HelpPanel(content="Note: <br /> 1. This email notification for Admin will function as long as a sender, a recipient, and an email subject are provided. <br /> 2. Please use 'Email' if you would like to add an email address to a form, and it will be used as the sender email address. <br /> 3. If the sender email address is empty, no-reply@landfood.ubc.ca will be used as the default email address. <br /> 4.  Use 'Email Subject' to specify the subject for a form. It will be applied as the sender's email subject."),
+            HelpPanel(content="Note: <br /> 1. This email notification for Admin will function as long as a sender, a recipient, and an email subject are provided. <br /> 2. Please use 'Email' if you would like to add an email address to a form, and it will be used as the sender email address. <br /> 3. If the sender email address is empty, no-reply@landfood.ubc.ca will be used as the default email address. <br /> 4.  Use 'Email Subject' to specify the subject for a form. It will be applied as the sender's email subject. <br /> 5. If there is a field called 'First Name', it will be used as the sign‑off in the form; otherwise, 'LFS Intranet' will be used."),
             FieldPanel('from_address'),
             FieldPanel('to_address'),
             FieldPanel('subject'),
@@ -206,10 +206,17 @@ class FormIndex(AbstractEmailForm):
 
         if sender and self.to_address and subject:
             fields = ''
+            signature = 'LFS Intranet'
             for field in self.render_email(form).split('\n'):            
                 if field:
                     field = field.replace('\r', '')
                     key = slugify(field.split(':')[0]).replace('-', '_')
+
+                    if key == 'first_name':
+                        temp = field.split(':')
+                        if len(temp) > 1:
+                            signature = temp[1].strip()
+
                     if key != 'captcha':
                         if key in list(form.fields.keys()):
                             fields += '<li>' + field + '</li>'
@@ -224,9 +231,9 @@ class FormIndex(AbstractEmailForm):
                     <h5>Form Details</h5>
                     <ul>{1}</ul>
                     <p>Best regards,</p>
-                    <p>LFS Intranet</p>
+                    <p>{2}</p>
                 </div>
-                '''.format(receiver.strip(), fields)
+                '''.format(receiver.strip(), fields, signature)
 
                 msg = MIMEText(message, 'html')
                 msg['Subject'] = '{0} - {1}'.format(subject, date.today().strftime('%x'))
